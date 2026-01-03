@@ -3,32 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Reaction Speed Game – PuzzleFlash</title>
-
-    <link rel="stylesheet" href="styles.css">
-    <audio id="backgroundMusic" loop autoplay>
-        <source src="assets/music/energymusic.mp3" type="audio/mp3">
-    </audio>
+    <title>Big Fish Eat Small Fish - PuzzleFlash</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Play the fun and challenging Big Fish Eat Small Fish game!">
 </head>
 <body>
-
-<h2>Reaction Time Challenge</h2>
-<p>Click the screen as soon as it turns green!</p>
-
-<div id="gameArea">
-    <button id="startBtn" class="btn">Start Game</button>
-    <p id="message">Wait for green!</p>
-    <p id="result">Your reaction time: <span id="time"></span> ms</p>
-</div>
-
-<select id="themeSelector">
-    <option value="default">Classic</option>
-    <option value="christmas">Christmas</option>
-    <option value="halloween">Halloween</option>
-    <option value="thanksgiving">Thanksgiving</option>
-    <option value="independence">Independence Day</option>
-</select>
-
-<script src="game.js"></script>
+    <header>
+        <div class="logo">
+            <a href="/">PuzzleFlash</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Big Fish Eat Small Fish</h1>
+        <canvas id="gameCanvas"></canvas>
+        <div class="social-share">
+            <p>Share your score on social media!</p>
+            <a href="https://twitter.com/share?text=I scored X points in Big Fish Eat Small Fish!&url=https://puzzleflash.com/game.html" target="_blank">Share on Twitter</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://puzzleflash.com/game.html" target="_blank">Share on Facebook</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 PuzzleFlash. All rights reserved.</p>
+    </footer>
+    <script src="game.js"></script>
+    <script>
+        // 这里可以加入 Google Analytics
+        gtag('event', 'play_game', {
+            'event_category': 'game',
+            'event_label': 'Big Fish Eat Small Fish'
+        });
+    </script>
 </body>
 </html>
