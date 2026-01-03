@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Reaction Time Game - PuzzleFlash</title>
+    <title>Play Reaction Time Game – PuzzleFlash</title>
+
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <h2>Reaction Time Challenge</h2>
-    <p>Click the button as fast as you can when the screen turns green!</p>
 
-    <select id="themeSelector">
-        <option value="default">Classic Theme</option>
-        <option value="christmas">Christmas</option>
-        <option value="halloween">Halloween</option>
-        <option value="thanksgiving">Thanksgiving</option>
-        <option value="independence">Independence Day</option>
-    </select>
+<h2>Reaction Time Challenge</h2>
+<p>Click as quickly as possible when the screen turns green!</p>
 
-    <div id="gameArea">
-        <button id="startBtn">Start Game</button>
-        <p id="message"></p>
-        <p id="result"></p>
-    </div>
+<div id="gameArea">
+    <button id="startBtn" class="btn">Start Game</button>
+    <p id="message">Wait for the green!</p>
+    <p id="result">Your reaction time: <span id="time"></span> ms</p>
+</div>
 
-    <script src="script.js"></script>
+<select id="themeSelector">
+    <option value="default">Classic Theme</option>
+    <option value="christmas">Christmas</option>
+    <option value="halloween">Halloween</option>
+    <option value="thanksgiving">Thanksgiving</option>
+    <option value="independence">Independence Day</option>
+</select>
+
+<script src="script.js"></script>
 </body>
 </html>
