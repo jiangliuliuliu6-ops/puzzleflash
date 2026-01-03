@@ -1,75 +1,91 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f5f5f5;
-    padding: 20px;
     margin: 0;
-    overflow-x: hidden;
+    padding: 0;
+    background-color: #f0f8ff;
+    color: #333;
 }
 
 header {
-    background-color: #ff6f61;
+    background-color: #1E90FF;
     color: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 1.5rem;
+    padding: 10px;
+    text-align: center;
+}
+
+header .logo a {
+    font-size: 2em;
+    text-decoration: none;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
 }
 
 h1 {
-    font-size: 2.5rem;
+    text-align: center;
+    color: #333;
 }
 
-h2 {
-    font-size: 2rem;
+.game-container {
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
 
-button, select {
-    padding: 15px 25px;
-    font-size: 1.2rem;
-    margin: 15px;
+.game-thumbnail {
+    text-align: center;
     cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
+}
+
+.game-thumbnail img {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+canvas {
+    display: block;
+    margin: 0 auto;
+    background-color: #e0f7fa;
+    border: 2px solid #1E90FF;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1E90FF;
     color: white;
 }
 
-button:hover, select:hover {
-    background-color: #45a049;
-}
-
-#gameArea {
+.social-share {
+    text-align: center;
     margin-top: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
+}
+
+.social-share a {
     display: inline-block;
+    margin: 10px;
+    background-color: #3b5998;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
 }
 
-#result {
-    font-size: 1.5rem;
-    margin-top: 10px;
-    display: none;
-}
-
-select {
-    font-size: 1rem;
-    padding: 10px;
-}
-
-@media (max-width: 600px) {
-    button, select {
-        padding: 20px;
-        font-size: 1.5rem;
-    }
-    header {
-        font-size: 1.25rem;
-    }
-    h1 {
-        font-size: 2rem;
-    }
-    h2 {
-        font-size: 1.5rem;
-    }
+.social-share a:hover {
+    background-color: #1d3557;
 }
