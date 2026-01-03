@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fish Eat Fish - Agar.io Mode</title>
-    <style>
-        /* 加入样式 */
-        body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; }
-        canvas { display: block; }
-    </style>
+    <title>PuzzleFlash - Play Classic Games</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Play the best classic and fun puzzle games!">
+    <meta name="keywords" content="puzzle games, fun games, free games, play online, classic games">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/">PuzzleFlash</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Welcome to PuzzleFlash!</h1>
+        <div class="game-container">
+            <a href="game.html">
+                <div class="game-thumbnail">
+                    <img src="thumbnail.jpg" alt="Big Fish Eat Small Fish">
+                    <p>Big Fish Eat Small Fish</p>
+                </div>
+            </a>
+            <!-- You can add more games here in the same way -->
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 PuzzleFlash. All rights reserved.</p>
+    </footer>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQR49JQS45"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -16,9 +42,5 @@
         gtag('js', new Date());
         gtag('config', 'G-JQR49JQS45');
     </script>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-    <script src="game.js"></script>
 </body>
 </html>
