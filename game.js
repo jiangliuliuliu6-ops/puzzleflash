@@ -13,58 +13,36 @@ let player = {
     color: "blue",
     dx: 0,
     dy: 0,
+    image: new Image(),
 };
+
+// 加载玩家鱼的图片
+player.image.src = 'playerFish.png';  // 使用一张鱼的图片替换圆点
 
 // 鱼群数据
 let fishArray = [];
 for (let i = 0; i < 10; i++) {
-    fishArray.push({
+    let fish = {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         radius: Math.random() * 10 + 10,
-        color: "green",
+        image: new Image(),
         dx: Math.random() * 2 - 1,
         dy: Math.random() * 2 - 1,
-    });
+    };
+    fish.image.src = `fish${Math.floor(Math.random() * 10) + 1}.png`;  // 随机选择不同鱼的图片
+    fishArray.push(fish);
 }
 
 // 绘制玩家鱼
 function drawPlayer() {
-    let grad = ctx.createRadialGradient(player.x, player.y, 0, player.x, player.y, player.radius);
-    grad.addColorStop(0, "lightblue");
-    grad.addColorStop(1, "blue");
-
-    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-    ctx.shadowBlur = 10;
-
-    ctx.beginPath();
-    ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.shadowColor = "transparent";
-    ctx.shadowBlur = 0;
+    ctx.drawImage(player.image, player.x - player.radius, player.y - player.radius, player.radius * 2, player.radius * 2);
 }
 
 // 绘制鱼群
 function drawFish() {
     fishArray.forEach(fish => {
-        let grad = ctx.createRadialGradient(fish.x, fish.y, 0, fish.x, fish.y, fish.radius);
-        grad.addColorStop(0, "lightgreen");
-        grad.addColorStop(1, "green");
-
-        ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-        ctx.shadowBlur = 5;
-
-        ctx.beginPath();
-        ctx.arc(fish.x, fish.y, fish.radius, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.shadowColor = "transparent";
-        ctx.shadowBlur = 0;
+        ctx.drawImage(fish.image, fish.x - fish.radius, fish.y - fish.radius, fish.radius * 2, fish.radius * 2);
     });
 }
 
@@ -103,36 +81,55 @@ function checkCollision() {
     });
 }
 
-// 重置游戏
+// 游戏重置
 function resetGame() {
     player.x = canvas.width / 2;
     player.y = canvas.height / 2;
     player.radius = 20;
     fishArray = [];
     for (let i = 0; i < 10; i++) {
-        fishArray.push({
+        let fish = {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             radius: Math.random() * 10 + 10,
-            color: "green",
+            image: new Image(),
             dx: Math.random() * 2 - 1,
             dy: Math.random() * 2 - 1,
-        });
+        };
+        fish.image.src = `fish${Math.floor(Math.random() * 10) + 1}.png`;  // 随机选择不同鱼的图片
+        fishArray.push(fish);
     }
 }
 
 // 游戏主循环
+let gameInterval;
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     updatePlayer();
     drawPlayer();
     drawFish();
     checkCollision();
-    requestAnimationFrame(gameLoop);
+}
+
+// 游戏控制
+let isGameRunning = false;
+
+// 开始/暂停按钮功能
+function toggleGame() {
+    if (isGameRunning) {
+        clearInterval(gameInterval);
+        isGameRunning = false;
+    } else {
+        gameInterval = setInterval(gameLoop, 1000 / 60); // 每秒60帧
+        isGameRunning = true;
+    }
 }
 
 // 按键控制
 window.addEventListener("keydown", movePlayer);
 
-// 启动游戏循环
-gameLoop();
+// 控制游戏开关
+document.getElementById("startPauseBtn").addEventListener("click", toggleGame);
+
+// 页面初始化时调用
+resetGame();
