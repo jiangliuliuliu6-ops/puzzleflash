@@ -1,59 +1,56 @@
-let startTime;
-let timeout;
-
-const message = document.getElementById("message");
-const result = document.getElementById("result");
-const timeDisplay = document.getElementById("time");
-const startBtn = document.getElementById("startBtn");
-const themeSelector = document.getElementById("themeSelector");
-
-startBtn.addEventListener("click", startGame);
-
-function startGame(){
-    result.style.display = "none"; // Hide result text until the game ends
-    timeDisplay.textContent = "";
-    message.textContent = "Wait for green...";
-    startBtn.disabled = true;
-
-    const delay = Math.random() * 3000 + 1000;
-
-    timeout = setTimeout(()=>{
-        document.body.style.backgroundColor = "#4CAF50"; // Green color
-        message.textContent = "CLICK NOW!";
-        startTime = Date.now();
-
-        document.body.addEventListener("click", finishGame);
-    }, delay);
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f5f5f5;
+    padding: 20px;
 }
 
-function finishGame(){
-    const reaction = Date.now() - startTime;
-    timeDisplay.textContent = reaction; // Show reaction time
-    result.style.display = "block";
-    resetGame();
+header {
+    background-color: #ff6f61;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-function resetGame(){
-    document.body.style.backgroundColor = "#f5f5f5"; // Reset background
-    startBtn.disabled = false;
-    document.body.removeEventListener("click", finishGame);
+h1 {
+    font-size: 2.5rem;
 }
 
-themeSelector.addEventListener("change", ()=>{
-    switch(themeSelector.value){
-        case "christmas":
-            document.body.style.backgroundColor = "#d00000"; // Christmas theme
-            break;
-        case "halloween":
-            document.body.style.backgroundColor = "#ff9100"; // Halloween theme
-            break;
-        case "thanksgiving":
-            document.body.style.backgroundColor = "#b5651d"; // Thanksgiving theme
-            break;
-        case "independence":
-            document.body.style.backgroundColor = "#0033a0"; // Independence Day theme
-            break;
-        default:
-            document.body.style.backgroundColor = "#f5f5f5"; // Default theme
-    }
-});
+h2 {
+    color: #333;
+    margin-top: 20px;
+}
+
+button, select {
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    margin: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+button:hover, select:hover {
+    background-color: #45a049;
+}
+
+#gameArea {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+#result {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    display: none;
+}
+
+select {
+    font-size: 1rem;
+    padding: 10px;
+}
