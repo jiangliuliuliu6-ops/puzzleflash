@@ -39,29 +39,32 @@ h1 {
     color: #333;
 }
 
-.game-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.game-thumbnail {
-    text-align: center;
-    cursor: pointer;
-}
-
-.game-thumbnail img {
-    width: 300px;
-    height: 200px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
 canvas {
     display: block;
     margin: 0 auto;
     background-color: #e0f7fa;
     border: 2px solid #1E90FF;
+    margin-top: 20px;
+}
+
+.controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    background-color: #1E90FF;
+    color: white;
+    border-radius: 5px;
+}
+
+.controls button:hover {
+    background-color: #4682b4;
 }
 
 footer {
