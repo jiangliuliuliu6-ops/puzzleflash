@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Play Reaction Time Game – PuzzleFlash</title>
-
-<meta name="description" content="Play the PuzzleFlash browser reaction game. Click as fast as you can when the screen changes color! Track your best score and challenge friends.">
-
-<link rel="stylesheet" href="styles.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Reaction Time Game - PuzzleFlash</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+    <h2>Reaction Time Challenge</h2>
+    <p>Click the button as fast as you can when the screen turns green!</p>
 
-<h2>Reaction Time Challenge</h2>
+    <select id="themeSelector">
+        <option value="default">Classic Theme</option>
+        <option value="christmas">Christmas</option>
+        <option value="halloween">Halloween</option>
+        <option value="thanksgiving">Thanksgiving</option>
+        <option value="independence">Independence Day</option>
+    </select>
 
-<p>Click the button as fast as you can when the screen turns green!</p>
+    <div id="gameArea">
+        <button id="startBtn">Start Game</button>
+        <p id="message"></p>
+        <p id="result"></p>
+    </div>
 
-<select id="themeSelector">
-<option value="default">Classic Theme</option>
-<option value="christmas">Christmas</option>
-<option value="halloween">Halloween</option>
-<option value="thanksgiving">Thanksgiving</option>
-<option value="independence">Independence Day</option>
-</select>
-
-<div id="gameArea">
-<button id="startBtn">Start Game</button>
-<p id="message"></p>
-<p id="result"></p>
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
