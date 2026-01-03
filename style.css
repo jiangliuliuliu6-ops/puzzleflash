@@ -3,6 +3,8 @@ body {
     text-align: center;
     background: #f5f5f5;
     padding: 20px;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 header {
@@ -10,6 +12,7 @@ header {
     color: white;
     padding: 20px;
     border-radius: 10px;
+    font-size: 1.5rem;
 }
 
 h1 {
@@ -17,7 +20,7 @@ h1 {
 }
 
 h2 {
-    color: #333;
+    font-size: 2rem;
     margin-top: 20px;
 }
 
@@ -53,4 +56,20 @@ button:hover, select:hover {
 select {
     font-size: 1rem;
     padding: 10px;
+}
+
+@media (max-width: 600px) {
+    button, select {
+        padding: 20px;
+        font-size: 1.5rem;
+    }
+    header {
+        font-size: 1.25rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
 }
