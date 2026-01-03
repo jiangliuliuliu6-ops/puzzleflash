@@ -1,68 +1,56 @@
-let gameButton = document.getElementById("gameButton");
-let message = document.getElementById("message");
-let result = document.getElementById("result");
-let highscores = document.getElementById("highscores");
-let themeSelect = document.getElementById("theme");
-let difficulty = document.getElementById("difficulty");
-
 let startTime;
-let waiting = false;
-let ready = false;
+let timeout;
 
-function getDelay() {
-  if (difficulty.value === "easy") return Math.random() * 2000 + 1000;
-  if (difficulty.value === "medium") return Math.random() * 2000 + 500;
-  return Math.random() * 1500 + 300;
+const message = document.getElementById("message");
+const result = document.getElementById("result");
+const startBtn = document.getElementById("startBtn");
+const themeSelector = document.getElementById("themeSelector");
+
+startBtn.addEventListener("click", startGame);
+
+function startGame(){
+    result.textContent = "";
+    message.textContent = "Wait for green...";
+    startBtn.disabled = true;
+
+    const delay = Math.random()*3000 + 1000;
+
+    timeout = setTimeout(()=>{
+        document.body.style.background = "#4CAF50";
+        message.textContent = "CLICK NOW!";
+        startTime = Date.now();
+
+        document.body.addEventListener("click", finishGame);
+    }, delay);
 }
 
-gameButton.addEventListener("click", () => {
-  if (!waiting && !ready) {
-    message.textContent = "Get ready...";
-    gameButton.textContent = "Wait...";
-    waiting = true;
-
-    setTimeout(() => {
-      ready = true;
-      waiting = false;
-      gameButton.classList.add("ready");
-      gameButton.textContent = "CLICK NOW!";
-      startTime = Date.now();
-    }, getDelay());
-  } 
-  else if (waiting) {
-    result.textContent = "Too early! ❌";
-  }
-  else if (ready) {
-    let time = Date.now() - startTime;
-    result.textContent = `Your time: ${time} ms ⚡`;
-    saveScore(time);
-
-    ready = false;
-    gameButton.classList.remove("ready");
-    gameButton.textContent = "Play Again";
-  }
-});
-
-function saveScore(score) {
-  let data = JSON.parse(localStorage.getItem("scores") || "[]");
-  data.push(score);
-  data.sort((a,b)=>a-b);
-  data = data.slice(0,5);
-  localStorage.setItem("scores", JSON.stringify(data));
-  renderScores();
+function finishGame(){
+    const reaction = Date.now() - startTime;
+    result.textContent = "Your reaction time: " + reaction + " ms";
+    resetGame();
 }
 
-function renderScores() {
-  let data = JSON.parse(localStorage.getItem("scores") || "[]");
-  highscores.innerHTML = "";
-  data.forEach(s=>{
-    let li=document.createElement("li");
-    li.textContent = s + " ms";
-    highscores.appendChild(li);
-  });
+function resetGame(){
+    document.body.style.background = "#f5f5f5";
+    startBtn.disabled = false;
+    document.body.removeEventListener("click", finishGame);
 }
-renderScores();
 
-themeSelect.addEventListener("change", ()=>{
-  document.body.className = themeSelect.value;
+themeSelector.addEventListener("change", ()=>{
+    switch(themeSelector.value){
+        case "christmas":
+            document.body.style.background="#d00000";
+            break;
+        case "halloween":
+            document.body.style.background="#ff9100";
+            break;
+        case "thanksgiving":
+            document.body.style.background="#b5651d";
+            break;
+        case "independence":
+            document.body.style.background="#0033a0";
+            break;
+        default:
+            document.body.style.background="#f5f5f5";
+    }
 });
