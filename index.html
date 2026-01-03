@@ -1,140 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PuzzleFlash - Fun Reaction Time Game Online</title>
 
-<title>Reaction Time Test — Free Online Reflex & Clicking Speed Game | PuzzleFlash</title>
+    <meta name="description" content="Test your reaction time with PuzzleFlash, a fun, free, online click speed game. Play instantly in your browser.">
+    <meta name="keywords" content="reaction time game, click speed game, reaction speed, free online game, puzzle flash">
 
-<meta name="description" content="Play PuzzleFlash — a free online reaction time test and reflex clicking speed game. Measure your reaction speed in milliseconds and challenge your friends. No download required. Works on mobile and desktop.">
-
-<meta name="keywords" content="reaction time test online, reflex test game, clicking speed game, free brain game, milliseconds reaction tester, online reaction speed test, browser reflex game, click timing test, reaction challenge game, puzzleflash reaction game">
-
-<link rel="preload" href="style.css" as="style">
-<link rel="stylesheet" href="style.css">
-
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-<!-- OpenGraph -->
-<meta property="og:title" content="PuzzleFlash — Free Online Reaction Time Test Game">
-<meta property="og:description" content="Test your reaction speed in milliseconds with this free online reflex clicking speed game. Instant play — no downloads.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://puzzleflash.com">
-<meta property="og:site_name" content="PuzzleFlash">
-<meta property="og:image" content="https://puzzleflash.com/cover.jpg">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PuzzleFlash — Free Online Reaction Time Test">
-<meta name="twitter:description" content="Measure your reaction time in milliseconds with this simple online reflex test clicking game. Try it now!">
-<meta name="twitter:image" content="https://puzzleflash.com/cover.jpg">
-
-<!-- Schema.org -->
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"VideoGame",
- "name":"PuzzleFlash Reaction Time Test",
- "url":"https://puzzleflash.com",
- "operatingSystem":"Web Browser",
- "applicationCategory":"Game",
- "inLanguage":"en",
- "genre":"Casual Game",
- "description":"Free browser-based reaction time test game. Click when the button turns green and measure your reflexes in milliseconds.",
- "playMode":"SinglePlayer"
-}
-</script>
-
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQR49JQS45"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-JQR49JQS45');
-</script>
-
+    <link rel="stylesheet" href="styles.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQR49JQS45"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-JQR49JQS45');
+    </script>
 </head>
-
 <body>
+    <header>
+        <h1>PuzzleFlash - Reaction Speed Game</h1>
+        <p>Test how fast you can react! Free browser click game.</p>
+    </header>
 
-<header>
-  <h1>PuzzleFlash — Reaction Speed Test ⚡</h1>
-  <p>Tap the button as fast as you can when it turns <strong>GREEN</strong>!</p>
-</header>
+    <main>
+        <button onclick="window.location.href='game.html'" class="cta-btn">Play Reaction Game</button>
+    </main>
 
-<section class="controls">
+    <footer>
+        <a href="privacy.html">Privacy Policy</a>
+    </footer>
 
-  <label>Theme:</label>
-  <select id="theme">
-    <option value="default">Classic</option>
-    <option value="christmas">Christmas 🎄</option>
-    <option value="halloween">Halloween 🎃</option>
-    <option value="thanksgiving">Thanksgiving 🦃</option>
-    <option value="newyear">New Year 🎆</option>
-    <option value="valentine">Valentine’s Day ❤️</option>
-  </select>
-
-  <label>Difficulty:</label>
-  <select id="difficulty">
-    <option value="easy">Easy 😄</option>
-    <option value="medium">Medium 😎</option>
-    <option value="hard">Hard 🔥</option>
-  </select>
-
-</section>
-
-<section class="game">
-  <button id="gameButton">Wait for Green...</button>
-  <p id="message"></p>
-  <h2 id="result"></h2>
-</section>
-
-<section class="scoreboard">
-  <h3>🏆 Best Reaction Times</h3>
-  <ol id="highscores"></ol>
-</section>
-
-<!-- SEO CONTENT (可见但不影响体验) -->
-<section class="seo">
-  <h2>Free Online Reaction Time Test Game</h2>
-
-  <p>
-    PuzzleFlash is a free browser-based reaction time test and reflex clicking speed game. 
-    When the button turns green, click as fast as you can and your reaction speed is measured in milliseconds. 
-    This simple brain game helps improve focus, hand–eye coordination, and response speed.
-  </p>
-
-  <h3>Common Searches</h3>
-  <ul>
-    <li>reaction time test online free</li>
-    <li>reflex speed clicking game</li>
-    <li>measure reaction time in milliseconds</li>
-    <li>online reaction speed challenge</li>
-    <li>browser clicking reflex test</li>
-  </ul>
-
-  <h3>FAQ</h3>
-
-  <p><strong>What is a normal reaction time?</strong><br>
-  Most people react between 200–300 ms.</p>
-
-  <p><strong>Is this game free?</strong><br>
-  Yes — PuzzleFlash is completely free to play.</p>
-
-  <p><strong>Do I need to install anything?</strong><br>
-  No — just open and play online.</p>
-
-  <p><strong>Does it work on mobile?</strong><br>
-  Yes — fully mobile friendly.</p>
-</section>
-
-<footer>
-  <p>PuzzleFlash — Free Online Reaction Time Game</p>
-  <p>© 2026 PuzzleFlash. All rights reserved.</p>
-</footer>
-
-<script src="script.js"></script>
-
+    <!-- Hidden SEO content -->
+    <div style="display:none">
+        PuzzleFlash is a simple and fun online reaction time game. Test your clicking speed with various holiday themes like Christmas, Halloween, and more. No downloads required, just play directly in your browser!
+    </div>
 </body>
 </html>
