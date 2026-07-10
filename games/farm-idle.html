@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Farm Idle – Free Harvest Empire Game | PuzzleFlash</title>
+<meta name="description" content="Play Farm Idle free! Build your harvest empire, plant crops, hire farmers, unlock buildings and achievements. Relaxing idle clicker. No download needed!"/>
+<meta name="keywords" content="farm idle, idle game, clicker game, harvest empire, farm tycoon, idle clicker, browser game"/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://puzzleflash.com/games/farm-idle.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Farm Idle – Free Harvest Empire Game"/>
+<meta property="og:description" content="Build your harvest empire with crops, farmers and buildings. Relaxing idle clicker, no download!"/>
+<meta property="og:url" content="https://puzzleflash.com/games/farm-idle.html"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Farm Idle","description":"Free idle farm tycoon clicker game.","genre":["Idle","Casual"],"playMode":"SinglePlayer","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#08081a;--surface:#111128;--card:#15153a;--card2:#1c1c45;
+  --border:#2a2a60;--accent:#e94560;--gold:#ffd700;--green:#4ade80;
+  --blue:#4d96ff;--purple:#c77dff;--teal:#2ec4b6;--orange:#ff9f1c;
+  --text:#eeeeff;--muted:#6868a0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;user-select:none;
+  background-image:radial-gradient(ellipse 70% 45% at 10% 10%,#1e0a72 0%,transparent 55%),radial-gradient(ellipse 55% 40% at 90% 90%,#0a1f66 0%,transparent 55%),radial-gradient(ellipse 40% 30% at 50% 50%,#150540 0%,transparent 70%);}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d) ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.05}to{opacity:.9}}
+
+/* SITE HEADER */
+#site-header{width:100%;background:#020617;padding:13px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:500;font-family:'Nunito',sans-serif;}
+#site-header .sh-logo{font-size:22px;font-weight:700;color:#facc15;letter-spacing:1px;text-decoration:none;}
+#site-header .sh-logo:hover{opacity:.85}
+#site-header .sh-right{display:flex;align-items:center;gap:12px}
+#site-header .sh-back{display:inline-flex;align-items:center;gap:6px;background:#facc15;color:#0f172a;border:none;border-radius:8px;padding:7px 16px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;text-decoration:none;transition:background .2s,transform .2s;}
+#site-header .sh-back:hover{background:#fde047;transform:translateX(-2px)}
+#site-header nav a{color:#e5e7eb;font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;transition:.2s;text-decoration:none;}
+#site-header nav a:hover{color:#facc15}
+#site-header .sh-divider{width:1px;height:20px;background:#1e293b;margin:0 4px}
+@media(max-width:640px){#site-header nav,#site-header .sh-divider{display:none}#site-header{padding:10px 4%}}
+
+#app{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px 10px 60px;gap:12px}
+header{width:100%;max-width:820px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.logo{font-family:'Fredoka One',cursive;font-size:1.9rem;line-height:1;background:linear-gradient(120deg,#ffd93d,#6bcb77,#4ade80,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 14px rgba(255,217,61,.4))}
+.logo-sub{font-size:.7rem;display:block;-webkit-text-fill-color:var(--muted);background:none;font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.header-right{display:flex;align-items:center;gap:8px}
+.score-strip{display:flex;gap:6px}
+.score-box{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:5px 12px;text-align:center;min-width:72px}
+.score-box .lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.score-box .val{font-family:'Fredoka One',cursive;font-size:1.4rem;line-height:1.2;color:var(--gold)}
+.like-btn{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:7px 14px;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;color:var(--text)}
+.like-btn:hover{border-color:var(--accent);transform:scale(1.05)}
+.like-btn.liked{background:linear-gradient(135deg,#e94560,#ff7a7a);border-color:transparent;color:#fff}
+@keyframes heartPop{0%{transform:scale(1)}50%{transform:scale(1.7)}100%{transform:scale(1)}}
+.like-btn.liked .heart{animation:heartPop .35s cubic-bezier(.34,1.56,.64,1)}
+
+.ctrl-bar{width:100%;max-width:820px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.ctrl-left{display:flex;gap:7px;align-items:center}
+.ctrl-right{display:flex;gap:7px;align-items:center}
+.level-badge{display:flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border);border-radius:50px;padding:6px 14px}
+.level-badge .lv-icon{font-size:1rem}
+.level-badge .lv-text{font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--gold)}
+.level-badge .lv-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.xp-wrap{flex:1;min-width:100px;max-width:180px}
+.xp-label{font-size:.58rem;color:var(--muted);letter-spacing:.06em;margin-bottom:3px;text-transform:uppercase}
+.xp-track{height:7px;background:var(--surface);border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+.xp-fill{height:100%;background:linear-gradient(90deg,#ffd93d,#6bcb77);border-radius:99px;transition:width .4s}
+.c-btn{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:7px 15px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;color:var(--text);cursor:pointer;transition:all .18s}
+.c-btn:hover{transform:translateY(-1px);filter:brightness(1.15)}
+.c-btn.share{border-color:var(--green);color:var(--green)}.c-btn.share:hover{background:var(--green);color:#000}
+.c-btn.reset-btn{border-color:var(--accent);color:var(--accent)}.c-btn.reset-btn:hover{background:var(--accent);color:#fff}
+
+/* FARM LAYOUT */
+.game-area{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:820px}
+
+/* FARM FIELD */
+.farm-wrap{width:100%;background:var(--card);border:2px solid var(--border);border-radius:22px;padding:16px;box-shadow:0 0 60px rgba(0,0,0,.7)}
+.farm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.farm-title{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--gold)}
+.coins-display{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:6px 14px}
+.coins-display .coin-icon{font-size:1.2rem}
+.coins-display .coin-val{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--gold)}
+.coins-display .cps-val{font-size:.7rem;color:var(--muted)}
+
+/* FARM GRID */
+.farm-field{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+.farm-plot{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .18s;min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative}
+.farm-plot:hover{border-color:var(--green);transform:translateY(-2px)}
+.farm-plot.ready{border-color:var(--gold);background:rgba(255,215,0,.08);animation:readyPulse 1s ease-in-out infinite alternate}
+@keyframes readyPulse{from{box-shadow:0 0 0 0 rgba(255,215,0,.2)}to{box-shadow:0 0 12px 4px rgba(255,215,0,.35)}}
+.farm-plot.growing{border-color:var(--green)}
+.farm-plot.empty{border-color:var(--border);opacity:.7}
+.plot-icon{font-size:1.8rem;line-height:1}
+.plot-name{font-size:.65rem;font-weight:700;color:var(--muted)}
+.plot-timer{font-size:.6rem;color:var(--teal);font-weight:800}
+.progress-bar{position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 12px 12px;background:var(--surface)}
+.progress-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--green),var(--teal));transition:width .5s linear}
+
+/* SHOP & BUILDINGS */
+.two-col{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px}
+.panel-title{font-family:'Fredoka One',cursive;font-size:1.05rem;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.shop-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .18s;margin-bottom:8px}
+.shop-item:last-child{margin-bottom:0}
+.shop-item:hover:not(.cant-afford){border-color:var(--gold);transform:translateX(2px)}
+.shop-item.cant-afford{opacity:.5;cursor:not-allowed}
+.shop-item .si-icon{font-size:1.5rem;width:36px;text-align:center;flex-shrink:0}
+.shop-item .si-info{flex:1}
+.shop-item .si-name{font-size:.82rem;font-weight:800}
+.shop-item .si-desc{font-size:.68rem;color:var(--muted)}
+.shop-item .si-cost{font-family:'Fredoka One',cursive;font-size:.9rem;color:var(--gold);white-space:nowrap}
+.shop-item .si-owned{font-size:.65rem;color:var(--teal);font-weight:700}
+
+/* INFO BAR */
+.info-bar{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:10px;transition:border-color .2s}
+.info-card:hover{border-color:var(--green)}
+.info-card .ic-icon{font-size:1.6rem;line-height:1;flex-shrink:0}
+.info-card .ic-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px}
+.info-card .ic-val{font-family:'Fredoka One',cursive;font-size:1.5rem;line-height:1.1;color:var(--text)}
+.info-card.harvests .ic-val{color:var(--green)}
+.info-card.farmers .ic-val{color:var(--orange)}
+.info-card.cps .ic-val{color:var(--gold)}
+.info-card.total .ic-val{color:var(--teal)}
+@media(max-width:600px){.info-bar{grid-template-columns:repeat(2,1fr)}}
+
+.ach-bar{width:100%;display:flex;gap:8px;flex-wrap:wrap}
+.ach-mini{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;background:var(--surface);border:1px solid var(--border);transition:all .3s;opacity:.42;flex:1;min-width:130px}
+.ach-mini.unlocked{opacity:1;border-color:var(--gold);background:rgba(255,215,0,.07)}
+.ach-icon{font-size:1.05rem;filter:grayscale(1)}
+.ach-mini.unlocked .ach-icon{filter:none}
+.ach-info .ach-name{font-size:.7rem;font-weight:800;line-height:1.2}
+.ach-info .ach-desc{font-size:.58rem;color:var(--muted);line-height:1.3}
+
+/* POPUPS */
+.coin-pop{position:fixed;z-index:301;font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--gold);pointer-events:none;animation:scoreUp .8s ease forwards;text-shadow:0 0 10px var(--gold)}
+@keyframes scoreUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-55px)}}
+#levelup-banner{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);z-index:400;background:linear-gradient(135deg,#ffd93d,#6bcb77);border-radius:50px;padding:12px 32px;font-family:'Fredoka One',cursive;font-size:1.3rem;color:#0f172a;box-shadow:0 8px 30px rgba(255,217,61,.5);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0}
+#levelup-banner.show{transform:translateX(-50%) translateY(0);opacity:1}
+#ach-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);z-index:400;background:var(--card2);border:1px solid var(--gold);border-radius:16px;padding:12px 20px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(255,215,0,.2);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;min-width:260px}
+#ach-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.at-icon{font-size:1.6rem}.at-title{font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--gold)}.at-desc{font-size:.75rem;color:var(--muted)}
+
+/* HOW TO PLAY */
+#how-section{width:100%;max-width:820px}
+.section-title{font-family:'Fredoka One',cursive;font-size:1.45rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.tabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+.tab-btn{background:var(--card);border:1px solid var(--border);border-radius:50px;padding:7px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.82rem;color:var(--muted);cursor:pointer;transition:all .2s}
+.tab-btn.active,.tab-btn:hover{background:linear-gradient(135deg,#ffd93d,#6bcb77);border-color:transparent;color:#0f172a}
+.tab-content{display:none}.tab-content.active{display:block}
+.tut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tut-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;transition:border-color .2s}
+.tut-card:hover{border-color:var(--green)}
+.tut-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:10px}
+.tut-card h3{font-size:.88rem;font-weight:800;margin-bottom:6px}
+.tut-card p{font-size:.78rem;color:var(--muted);line-height:1.55}
+.tip{display:inline-block;margin-top:8px;font-size:.7rem;color:var(--teal);font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-q{padding:14px 18px;font-weight:700;font-size:.88rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-item.open .faq-q{color:var(--green)}
+.faq-a{display:none;padding:0 18px 14px;font-size:.82rem;color:var(--muted);line-height:1.6}
+.faq-item.open .faq-a{display:block}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.ach-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:10px;opacity:.45;transition:all .3s}
+.ach-card.unlocked{opacity:1;border-color:var(--gold);background:rgba(255,215,0,.07)}
+.ach-card .ac-icon{font-size:1.8rem;filter:grayscale(1)}.ach-card.unlocked .ac-icon{filter:none}
+.ach-card .ac-name{font-size:.78rem;font-weight:800;margin-bottom:2px}.ach-card .ac-desc{font-size:.65rem;color:var(--muted)}
+
+#share-panel{display:none;position:fixed;inset:0;z-index:150;background:rgba(4,4,18,.85);backdrop-filter:blur(10px);align-items:center;justify-content:center}
+#share-panel.open{display:flex}
+.share-card{background:var(--card2);border:1px solid var(--border);border-radius:26px;padding:32px 36px;text-align:center;max-width:400px;width:92%;animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.share-card h2{font-family:'Fredoka One',cursive;font-size:1.7rem;margin-bottom:6px}
+.share-card p{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 8px;border-radius:13px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;transition:transform .15s}
+.share-btn:hover{transform:translateY(-2px)}
+.share-btn.tw{background:#1da1f2;color:#fff}.share-btn.fb{background:#1877f2;color:#fff}.share-btn.wa{background:#25d366;color:#fff}.share-btn.cp{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.share-close{background:none;border:1px solid var(--border);border-radius:50px;padding:7px 22px;color:var(--muted);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.82rem}
+.copy-toast{display:none;color:var(--green);font-size:.78rem;margin-top:6px;font-weight:700}.copy-toast.show{display:block}
+@media(max-width:600px){.share-card{padding:24px 18px}.share-btns{grid-template-columns:1fr}}
+</style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2745753897424989" crossorigin="anonymous"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="sh-logo">PuzzleFlash</a>
+  <div class="sh-right">
+    <nav><a href="/">HOME</a><a href="/about.html">ABOUT</a><a href="/privacy.html">PRIVACY</a><a href="/contact.html">CONTACT</a></nav>
+    <div class="sh-divider"></div>
+    <a href="/" class="sh-back">← Back to Games</a>
+  </div>
+</header>
+
+<div class="stars" id="stars"></div>
+<div id="app">
+
+<header>
+  <div class="logo">Farm Idle<span class="logo-sub">✦ harvest · no download · play now</span></div>
+  <div class="header-right">
+    <div class="score-strip">
+      <div class="score-box"><div class="lbl">Total Coins</div><div class="val" id="score-val">0</div></div>
+      <div class="score-box"><div class="lbl">All Time</div><div class="val" id="best-val">0</div></div>
+    </div>
+    <button class="like-btn" id="like-btn"><span class="heart">🤍</span><span id="like-count">5.4k</span></button>
+  </div>
+</header>
+
+<div class="ctrl-bar">
+  <div class="ctrl-left">
+    <div class="level-badge"><span class="lv-icon">🌾</span><div><div class="lv-label">Farm Level</div><div class="lv-text" id="lv-num">1</div></div></div>
+    <div class="xp-wrap">
+      <div class="xp-label">XP <span id="xp-txt">0 / 500</span></div>
+      <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="ctrl-right">
+    <button class="c-btn share" id="share-open-btn">🔗 Share</button>
+    <button class="c-btn reset-btn" id="reset-btn">🔄 Reset Farm</button>
+  </div>
+</div>
+
+<!-- GAME AREA -->
+<div class="game-area">
+
+  <!-- FARM FIELD -->
+  <div class="farm-wrap">
+    <div class="farm-header">
+      <div class="farm-title">🌾 Your Farm</div>
+      <div class="coins-display">
+        <span class="coin-icon">🪙</span>
+        <span class="coin-val" id="coins-disp">0</span>
+        <span class="cps-val" id="cps-disp">+0/s</span>
+      </div>
+    </div>
+    <div class="farm-field" id="farm-field"></div>
+    <div style="text-align:center;font-size:.78rem;color:var(--muted)">Click any plot to plant a seed. Click again when ready to harvest! 🌱</div>
+  </div>
+
+  <!-- SHOP & BUILDINGS -->
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-title">🌱 Crop Shop</div>
+      <div id="crop-shop"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">🏗️ Upgrades</div>
+      <div id="upgrade-shop"></div>
+    </div>
+  </div>
+
+  <!-- INFO BAR -->
+  <div class="info-bar">
+    <div class="info-card harvests"><div class="ic-icon">🌾</div><div class="ic-body"><div class="ic-label">Total Harvests</div><div class="ic-val" id="stat-harvests">0</div></div></div>
+    <div class="info-card farmers"><div class="ic-icon">👨‍🌾</div><div class="ic-body"><div class="ic-label">Auto-Farmers</div><div class="ic-val" id="stat-farmers">0</div></div></div>
+    <div class="info-card cps"><div class="ic-icon">🪙</div><div class="ic-body"><div class="ic-label">Coins/Second</div><div class="ic-val" id="stat-cps">0</div></div></div>
+    <div class="info-card total"><div class="ic-icon">💰</div><div class="ic-body"><div class="ic-label">Total Earned</div><div class="ic-val" id="stat-total">0</div></div></div>
+  </div>
+
+  <!-- ACH BAR -->
+  <div class="ach-bar" id="ach-mini-list"></div>
+</div>
+
+<!-- HOW TO PLAY -->
+<section id="how-section">
+  <div class="section-title">📖 How to Play</div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="basics">🎮 Basics</button>
+    <button class="tab-btn" data-tab="scoring">💰 Economy</button>
+    <button class="tab-btn" data-tab="strategy">🧠 Strategy</button>
+    <button class="tab-btn" data-tab="achievements">🏆 Achievements</button>
+    <button class="tab-btn" data-tab="faq">❓ FAQ</button>
+  </div>
+  <div class="tab-content active" id="tab-basics">
+    <div class="tut-grid">
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(74,222,128,.15)">🌱</div><h3>Plant Seeds</h3><p>Click any empty plot to plant a seed. The crop will grow over time. Watch the progress bar fill up!</p><span class="tip">💡 Different crops grow at different speeds</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,215,0,.15)">🌾</div><h3>Harvest Crops</h3><p>When the progress bar is full and the plot glows gold, click it to harvest and collect coins!</p><span class="tip">💡 Click golden plots first for max income</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,159,28,.15)">🛒</div><h3>Buy Upgrades</h3><p>Spend coins in the Crop Shop to unlock better crops. Visit Upgrades to hire farmers and build structures.</p><span class="tip">💡 Auto-farmers harvest for you!</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(77,150,255,.15)">👨‍🌾</div><h3>Hire Farmers</h3><p>Buy auto-farmers to harvest crops automatically over time. The more farmers, the more passive income!</p><span class="tip">💡 Farmers work even when you're idle</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(199,125,255,.15)">🏗️</div><h3>Build Structures</h3><p>Unlock Barns, Wells, and Silos to multiply your farm income. Each structure gives a permanent bonus.</p><span class="tip">💡 Structures stack with each other</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(46,196,182,.15)">⭐</div><h3>Level Up</h3><p>Every harvest earns XP. Level up your farm to unlock more plot slots and better crop varieties!</p><span class="tip">💡 Higher level = better crops unlock</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="tab-scoring">
+    <div class="tut-grid">
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(74,222,128,.15)">🌾</div><h3>Wheat</h3><p>8 coins, 6 seconds to grow. Best early crop. Cheap to plant, fast to harvest.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,107,107,.15)">🍅</div><h3>Tomato</h3><p>25 coins, 15 seconds to grow. Unlock at level 2. Great mid-game income.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,215,0,.15)">🌽</div><h3>Corn</h3><p>60 coins, 30 seconds to grow. Unlock at level 3. High value per harvest.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(199,125,255,.15)">🍇</div><h3>Grapes</h3><p>150 coins, 60 seconds to grow. Unlock at level 5. Excellent late-game crop.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,159,28,.15)">🍊</div><h3>Orange</h3><p>400 coins, 120 seconds to grow. Unlock at level 7. Premium crop for max earnings.</p></div>
+    </div>
+  </div>
+  <div class="tab-content" id="tab-strategy">
+    <div class="tut-grid">
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,159,28,.15)">⚡</div><h3>Early: Spam Wheat</h3><p>Fill all 5 plots with wheat and click fast. Early game is all about manual harvesting speed — wheat is your best friend.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(74,222,128,.15)">👨‍🌾</div><h3>Buy Farmers ASAP</h3><p>Auto-farmers give passive income forever. Invest in farmers as soon as you can — they pay for themselves within minutes.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,215,0,.15)">🎯</div><h3>Mix Crop Types</h3><p>Use fast crops (wheat) for active play and slow crops (grapes) for when you're away. This balances your income.</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(77,150,255,.15)">🏗️</div><h3>Structures Over Crops</h3><p>A Barn gives +50% to ALL passive income permanently. One Barn is better than planting 10 more crops long-term.</p></div>
+    </div>
+  </div>
+  <div class="tab-content" id="tab-achievements"><div class="ach-grid" id="ach-grid"></div></div>
+  <div class="tab-content" id="tab-faq">
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Does the farm keep earning when I close the tab? <span>▼</span></div><div class="faq-a"><p>Yes! Auto-farmers keep working. When you come back, you'll receive offline earnings based on your farmers' production rate (up to 2 hours of offline income).</p></div></div>
+      <div class="faq-item"><div class="faq-q">What is the best crop to plant? <span>▼</span></div><div class="faq-a"><p>For active play: wheat (fast). For passive income: grapes or oranges (high value). Mix them based on how often you click.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Is my progress saved? <span>▼</span></div><div class="faq-a"><p>Yes, your farm progress saves automatically every 5 seconds to your browser. It will be there when you return!</p></div></div>
+      <div class="faq-item"><div class="faq-q">What does Reset Farm do? <span>▼</span></div><div class="faq-a"><p>Pressing Reset Farm clears all your progress. This is permanent — use with caution!</p></div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div id="levelup-banner">🌾 Farm Level Up! Now Level <span id="lv-banner-num">2</span>!</div>
+<div id="ach-toast"><div class="at-icon" id="at-icon">🏆</div><div><div class="at-title" id="at-title">Achievement Unlocked!</div><div class="at-desc" id="at-desc"></div></div></div>
+
+<div id="share-panel">
+  <div class="share-card">
+    <h2>🔗 Share the Fun!</h2><p>Show off your harvest empire!</p>
+    <div class="share-btns">
+      <button class="share-btn tw" id="share-tw">𝕏 Twitter</button>
+      <button class="share-btn fb" id="share-fb">f Facebook</button>
+      <button class="share-btn wa" id="share-wa">📱 WhatsApp</button>
+      <button class="share-btn cp" id="share-cp">📋 Copy Link</button>
+    </div>
+    <div class="copy-toast" id="copy-toast">✅ Link copied!</div>
+    <button class="share-close" id="share-close">Close</button>
+  </div>
+</div>
+
+<article style="display:none" aria-hidden="true"><h1>Farm Idle – Free Harvest Empire Idle Clicker Game</h1><p>Play Farm Idle online free. Plant crops, hire auto-farmers, build structures, unlock achievements and level up your farm. Relaxing idle clicker game, no download needed.</p></article>
+
+<footer style="text-align:center;padding:36px 20px;border-top:1px solid #1e293b;color:#94a3b8;font-size:13px;font-family:'Nunito',sans-serif;background:#020617;margin-top:20px">
+  <div style="margin-bottom:12px"><a href="/" style="color:#94a3b8;text-decoration:underline;margin:0 10px">Home</a><a href="/about.html" style="color:#94a3b8;text-decoration:underline;margin:0 10px">About Us</a><a href="/privacy.html" style="color:#94a3b8;text-decoration:underline;margin:0 10px">Privacy Policy</a><a href="/contact.html" style="color:#94a3b8;text-decoration:underline;margin:0 10px">Contact</a></div>
+  <p>© 2026 <span style="color:#facc15;font-weight:700">PuzzleFlash</span> — Built for Gamers.</p>
+</footer>
+
+<script>
+// ── CROPS ──
+const CROPS=[
+  {id:'wheat',  icon:'🌾', name:'Wheat',  growTime:6,   value:8,   cost:0,    unlockLevel:1},
+  {id:'tomato', icon:'🍅', name:'Tomato', growTime:15,  value:25,  cost:40,   unlockLevel:2},
+  {id:'corn',   icon:'🌽', name:'Corn',   growTime:30,  value:60,  cost:150,  unlockLevel:3},
+  {id:'grape',  icon:'🍇', name:'Grapes', growTime:60,  value:150, cost:500,  unlockLevel:5},
+  {id:'orange', icon:'🍊', name:'Orange', growTime:120, value:400, cost:2000, unlockLevel:7},
+];
+
+// ── UPGRADES ──
+const UPGRADES=[
+  {id:'farmer1',  icon:'👨‍🌾', name:'Farmer',     desc:'+1 auto-farmer (0.5 coins/s)',  baseCost:80,  type:'farmer', cps:.5},
+  {id:'barn',     icon:'🏚️',  name:'Barn',        desc:'+50% to all passive income',    baseCost:400, type:'multiplier', mult:1.5},
+  {id:'farmer2',  icon:'👩‍🌾', name:'Farm Hand',   desc:'+1 farmer (1.5 coins/s)',       baseCost:250, type:'farmer', cps:1.5},
+  {id:'well',     icon:'🪣',  name:'Water Well',  desc:'+25% crop grow speed',          baseCost:600, type:'speed', speedMult:.75},
+  {id:'silo',     icon:'🏗️',  name:'Grain Silo',  desc:'+100 coins per harvest',        baseCost:1200,type:'harvest_bonus', bonus:100},
+  {id:'farmer3',  icon:'🚜',  name:'Tractor',     desc:'+1 tractor farmer (4 coins/s)', baseCost:800, type:'farmer', cps:4},
+  {id:'greenhouse',icon:'🌿',name:'Greenhouse',   desc:'×2 crop value permanently',     baseCost:3000,type:'value_mult', mult:2},
+  {id:'farmer4',  icon:'🤖', name:'Agri-Robot',   desc:'+1 robot (10 coins/s)',         baseCost:5000,type:'farmer', cps:10},
+];
+
+// ── ACHIEVEMENTS ──
+const ACH_DEFS=[
+  {id:'first_harvest', icon:'🌱', name:'First Harvest', desc:'Harvest your first crop'},
+  {id:'harvest_50',    icon:'🌾', name:'Busy Farmer',   desc:'Harvest 50 crops'},
+  {id:'harvest_200',   icon:'🏆', name:'Harvest King',  desc:'Harvest 200 crops'},
+  {id:'coins_500',     icon:'🪙', name:'Coin Hoarder',  desc:'Earn 500 coins total'},
+  {id:'coins_5000',    icon:'💰', name:'Wealthy Farmer',desc:'Earn 5,000 coins total'},
+  {id:'coins_50000',   icon:'🤑', name:'Millionaire',   desc:'Earn 50,000 coins total'},
+  {id:'farmers_5',     icon:'👨‍🌾', name:'Farm Crew',    desc:'Have 5 auto-farmers'},
+  {id:'built_3',       icon:'🏗️', name:'Builder',       desc:'Buy 3 upgrade structures'},
+  {id:'tomato_unlock', icon:'🍅', name:'Gardener',      desc:'Unlock tomato crop'},
+  {id:'grape_unlock',  icon:'🍇', name:'Vintner',       desc:'Unlock grapes crop'},
+  {id:'level_5',       icon:'🌟', name:'Master Farmer', desc:'Reach farm level 5'},
+  {id:'level_10',      icon:'👑', name:'Farm Legend',   desc:'Reach farm level 10'},
+];
+
+// ── STATE ──
+let coins=0, totalEarned=0, totalHarvests=0;
+let level=1, xp=0, xpNeeded=500;
+let coinsPerSec=0, farmerCount=0;
+let passiveMult=1, speedMult=1, valueMult=1, harvestBonus=0;
+let unlockedAch=[], purchasedUpgrades=[];
+let unlockedCrops=['wheat'];
+let selectedCrop='wheat';
+let lastSave=Date.now(), lastOffline=Date.now();
+
+// 5 farm plots
+const PLOT_COUNT=5;
+let plots=Array.from({length:PLOT_COUNT},()=>({crop:null,startTime:0,progress:0,ready:false}));
+
+// Load save
+try{
+  const s=JSON.parse(localStorage.getItem('farmIdle')||'{}');
+  coins=s.coins||0;totalEarned=s.totalEarned||0;totalHarvests=s.totalHarvests||0;
+  level=s.level||1;xp=s.xp||0;xpNeeded=s.xpNeeded||500;
+  coinsPerSec=s.coinsPerSec||0;farmerCount=s.farmerCount||0;
+  passiveMult=s.passiveMult||1;speedMult=s.speedMult||1;valueMult=s.valueMult||1;harvestBonus=s.harvestBonus||0;
+  unlockedAch=s.unlockedAch||[];purchasedUpgrades=s.purchasedUpgrades||[];
+  unlockedCrops=s.unlockedCrops||['wheat'];
+  // Offline earnings
+  if(s.lastSave){const offMs=Date.now()-s.lastSave;const offCoins=Math.floor(coinsPerSec*passiveMult*Math.min(offMs/1000,7200));if(offCoins>0){coins+=offCoins;totalEarned+=offCoins;}}
+}catch(e){}
+
+// ── STARS ──
+(function(){const c=document.getElementById('stars');for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2.5+.5;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s`;c.appendChild(s);}})();
+
+// ── RENDER FARM FIELD ──
+function renderField(){
+  const field=document.getElementById('farm-field');field.innerHTML='';
+  plots.forEach((plot,i)=>{
+    const div=document.createElement('div');
+    div.className='farm-plot'+(plot.ready?' ready':plot.crop?' growing':' empty');
+    if(plot.ready){
+      const crop=CROPS.find(c=>c.id===plot.crop);
+      div.innerHTML=`<div class="plot-icon">${crop.icon}</div><div class="plot-name">${crop.name}</div><div class="plot-timer">✨ Ready!</div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>`;
+    } else if(plot.crop){
+      const crop=CROPS.find(c=>c.id===plot.crop);
+      const elapsed=(Date.now()-plot.startTime)/1000;
+      const growTime=crop.growTime*speedMult;
+      const pct=Math.min(elapsed/growTime*100,100);
+      const rem=Math.max(growTime-elapsed,0);
+      div.innerHTML=`<div class="plot-icon" style="opacity:.7">${crop.icon}</div><div class="plot-name">${crop.name}</div><div class="plot-timer">${rem.toFixed(1)}s</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
+    } else {
+      div.innerHTML=`<div class="plot-icon">🟫</div><div class="plot-name" style="color:var(--muted)">${selectedCrop?CROPS.find(c=>c.id===selectedCrop).icon:''} Plant ${selectedCrop?CROPS.find(c=>c.id===selectedCrop).name:'crop'}</div>`;
+    }
+    div.addEventListener('click',()=>clickPlot(i));
+    field.appendChild(div);
+  });
+}
+
+function clickPlot(i){
+  const plot=plots[i];
+  if(plot.ready){
+    // Harvest
+    const crop=CROPS.find(c=>c.id===plot.crop);
+    const val=Math.floor(crop.value*valueMult)+harvestBonus;
+    coins+=val;totalEarned+=val;totalHarvests++;
+    plot.crop=null;plot.ready=false;plot.progress=0;
+    showCoinPop(val,document.querySelectorAll('.farm-plot')[i]);
+    addXP(10*level);
+    updateHUD();
+    checkAchievements();
+  } else if(!plot.crop){
+    // Plant
+    if(!selectedCrop)return;
+    plot.crop=selectedCrop;plot.startTime=Date.now();plot.ready=false;plot.progress=0;
+  }
+  renderField();
+}
+
+function showCoinPop(val,el){
+  if(!el)return;
+  const rect=el.getBoundingClientRect();
+  const pop=document.createElement('div');pop.className='coin-pop';pop.textContent='+'+val+'🪙';
+  pop.style.cssText=`left:${rect.left+rect.width/2}px;top:${rect.top}px`;
+  document.body.appendChild(pop);setTimeout(()=>pop.remove(),850);
+}
+
+// ── SHOP ──
+function renderCropShop(){
+  const el=document.getElementById('crop-shop');el.innerHTML='';
+  CROPS.forEach(crop=>{
+    const unlocked=unlockedCrops.includes(crop.id);
+    const canAfford=coins>=crop.cost;
+    const div=document.createElement('div');
+    div.className='shop-item'+(unlocked?selectedCrop===crop.id?' '+(canAfford?'':''):'':(!canAfford?' cant-afford':''));
+    if(unlocked){
+      div.innerHTML=`<div class="si-icon">${crop.icon}</div><div class="si-info"><div class="si-name">${crop.name}</div><div class="si-desc">+${Math.floor(crop.value*valueMult)+harvestBonus}🪙 · ${crop.growTime}s grow</div></div><div><div class="si-owned" style="color:var(--green)">✓ Unlocked</div></div>`;
+      div.style.borderColor=selectedCrop===crop.id?'var(--gold)':'';
+      div.style.background=selectedCrop===crop.id?'rgba(255,215,0,.08)':'';
+      div.addEventListener('click',()=>{selectedCrop=crop.id;renderCropShop();renderField();});
+    } else if(crop.unlockLevel<=level){
+      div.innerHTML=`<div class="si-icon">${crop.icon}</div><div class="si-info"><div class="si-name">${crop.name}</div><div class="si-desc">+${crop.value}🪙 · ${crop.growTime}s grow</div></div><div><div class="si-cost">🪙 ${formatNum(crop.cost)}</div></div>`;
+      div.addEventListener('click',()=>{if(coins>=crop.cost){coins-=crop.cost;unlockedCrops.push(crop.id);selectedCrop=crop.id;updateHUD();renderCropShop();checkAchievements();}});
+    } else {
+      div.innerHTML=`<div class="si-icon" style="filter:grayscale(1);opacity:.5">${crop.icon}</div><div class="si-info"><div class="si-name">${crop.name}</div><div class="si-desc">Unlocks at Farm Level ${crop.unlockLevel}</div></div><div><div class="si-cost">🔒 Lv${crop.unlockLevel}</div></div>`;
+      div.classList.add('cant-afford');
+    }
+    el.appendChild(div);
+  });
+}
+
+function renderUpgradeShop(){
+  const el=document.getElementById('upgrade-shop');el.innerHTML='';
+  UPGRADES.forEach(upg=>{
+    const bought=purchasedUpgrades.filter(id=>id===upg.id).length;
+    const cost=Math.floor(upg.baseCost*Math.pow(1.8,bought));
+    const canAfford=coins>=cost;
+    const div=document.createElement('div');
+    div.className='shop-item'+(!canAfford?' cant-afford':'');
+    div.innerHTML=`<div class="si-icon">${upg.icon}</div><div class="si-info"><div class="si-name">${upg.name} ${bought>0?'<span style="color:var(--teal)">×'+bought+'</span>':''}</div><div class="si-desc">${upg.desc}</div></div><div><div class="si-cost">🪙 ${formatNum(cost)}</div></div>`;
+    div.addEventListener('click',()=>{
+      if(coins<cost)return;
+      coins-=cost;purchasedUpgrades.push(upg.id);
+      applyUpgrade(upg);updateHUD();renderUpgradeShop();checkAchievements();
+    });
+    el.appendChild(div);
+  });
+}
+
+function applyUpgrade(upg){
+  if(upg.type==='farmer'){coinsPerSec+=upg.cps;farmerCount++;}
+  else if(upg.type==='multiplier'){passiveMult*=upg.mult;}
+  else if(upg.type==='speed'){speedMult*=upg.speedMult;}
+  else if(upg.type==='harvest_bonus'){harvestBonus+=upg.bonus;}
+  else if(upg.type==='value_mult'){valueMult*=upg.mult;}
+  document.getElementById('stat-farmers').textContent=farmerCount;
+  document.getElementById('stat-cps').textContent=formatNum((coinsPerSec*passiveMult).toFixed(1));
+}
+
+function updateHUD(){
+  document.getElementById('score-val').textContent=formatNum(Math.floor(coins));
+  document.getElementById('best-val').textContent=formatNum(Math.floor(totalEarned));
+  document.getElementById('coins-disp').textContent=formatNum(Math.floor(coins));
+  document.getElementById('cps-disp').textContent='+'+formatNum((coinsPerSec*passiveMult).toFixed(1))+'/s';
+  document.getElementById('stat-harvests').textContent=totalHarvests;
+  document.getElementById('stat-farmers').textContent=farmerCount;
+  document.getElementById('stat-cps').textContent=formatNum((coinsPerSec*passiveMult).toFixed(1));
+  document.getElementById('stat-total').textContent=formatNum(Math.floor(totalEarned));
+}
+
+function addXP(amt){
+  xp+=amt;
+  while(xp>=xpNeeded){xp-=xpNeeded;level++;xpNeeded=Math.floor(xpNeeded*1.5);
+    document.getElementById('lv-num').textContent=level;
+    showLevelUp();renderCropShop();checkAchievements();}
+  updateXPBar();
+}
+function updateXPBar(){document.getElementById('xp-fill').style.width=(xp/xpNeeded*100)+'%';document.getElementById('xp-txt').textContent=Math.floor(xp)+' / '+Math.floor(xpNeeded);}
+function showLevelUp(){const b=document.getElementById('levelup-banner');document.getElementById('lv-banner-num').textContent=level;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2500);}
+
+// ── ACHIEVEMENTS ──
+function checkAchievements(){
+  const built=purchasedUpgrades.length;
+  const checks=[
+    ['first_harvest', totalHarvests>=1],
+    ['harvest_50',    totalHarvests>=50],
+    ['harvest_200',   totalHarvests>=200],
+    ['coins_500',     totalEarned>=500],
+    ['coins_5000',    totalEarned>=5000],
+    ['coins_50000',   totalEarned>=50000],
+    ['farmers_5',     farmerCount>=5],
+    ['built_3',       built>=3],
+    ['tomato_unlock', unlockedCrops.includes('tomato')],
+    ['grape_unlock',  unlockedCrops.includes('grape')],
+    ['level_5',       level>=5],
+    ['level_10',      level>=10],
+  ];
+  checks.forEach(([id,met])=>{if(met&&!unlockedAch.includes(id)){unlockedAch.push(id);const a=ACH_DEFS.find(x=>x.id===id);showAchToast(a);renderAchMini();renderAchGrid();saveData();}});
+}
+function showAchToast(a){document.getElementById('at-icon').textContent=a.icon;document.getElementById('at-title').textContent=a.name;document.getElementById('at-desc').textContent=a.desc;const t=document.getElementById('ach-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+function renderAchMini(){const el=document.getElementById('ach-mini-list');el.innerHTML='';ACH_DEFS.forEach(a=>{const d=document.createElement('div');d.className='ach-mini'+(unlockedAch.includes(a.id)?' unlocked':'');d.innerHTML=`<span class="ach-icon">${a.icon}</span><div class="ach-info"><div class="ach-name">${a.name}</div><div class="ach-desc">${a.desc}</div></div>`;el.appendChild(d);});}
+function renderAchGrid(){const el=document.getElementById('ach-grid');if(!el)return;el.innerHTML='';ACH_DEFS.forEach(a=>{const d=document.createElement('div');d.className='ach-card'+(unlockedAch.includes(a.id)?' unlocked':'');d.innerHTML=`<div class="ac-icon">${a.icon}</div><div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div></div>`;el.appendChild(d);});}
+
+function saveData(){
+  try{localStorage.setItem('farmIdle',JSON.stringify({coins,totalEarned,totalHarvests,level,xp,xpNeeded,coinsPerSec,farmerCount,passiveMult,speedMult,valueMult,harvestBonus,unlockedAch,purchasedUpgrades,unlockedCrops,lastSave:Date.now()}));}catch(e){}
+}
+
+function formatNum(n){n=Number(n);if(n>=1e9)return(n/1e9).toFixed(1)+'B';if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'k';return Math.floor(n);}
+
+// ── MAIN TICK ──
+let lastTick=Date.now();
+setInterval(()=>{
+  const now=Date.now();
+  const dt=(now-lastTick)/1000;lastTick=now;
+
+  // Passive coins
+  const earned=coinsPerSec*passiveMult*dt;
+  coins+=earned;totalEarned+=earned;
+
+  // Update growing plots
+  let changed=false;
+  plots.forEach(plot=>{
+    if(plot.crop&&!plot.ready){
+      const crop=CROPS.find(c=>c.id===plot.crop);
+      const elapsed=(now-plot.startTime)/1000;
+      if(elapsed>=crop.growTime*speedMult){plot.ready=true;changed=true;}
+    }
+  });
+  if(changed)renderField();
+
+  updateHUD();
+
+  // Auto-save every 5s
+  if(now-lastSave>5000){saveData();lastSave=now;}
+},200);
+
+// Field animation update
+setInterval(()=>{renderField();},500);
+
+// ── CONTROLS ──
+document.getElementById('reset-btn').addEventListener('click',()=>{
+  if(!confirm('Reset your entire farm? All progress will be lost!'))return;
+  localStorage.removeItem('farmIdle');location.reload();
+});
+
+document.getElementById('like-btn').addEventListener('click',function(){this.classList.toggle('liked');const liked=this.classList.contains('liked');this.querySelector('.heart').textContent=liked?'❤️':'🤍';let n=parseFloat(document.getElementById('like-count').textContent)*1000;document.getElementById('like-count').textContent=formatNum(liked?n+1:n-1);try{localStorage.setItem('farmIdleLiked',liked?'1':'');}catch(e){}});
+try{if(localStorage.getItem('farmIdleLiked')){document.getElementById('like-btn').classList.add('liked');document.getElementById('like-btn').querySelector('.heart').textContent='❤️';}}catch(e){}
+
+const shareURL='https://puzzleflash.com/games/farm-idle.html';
+document.getElementById('share-open-btn').addEventListener('click',()=>document.getElementById('share-panel').classList.add('open'));
+document.getElementById('share-close').addEventListener('click',()=>document.getElementById('share-panel').classList.remove('open'));
+document.getElementById('share-tw').addEventListener('click',()=>window.open(`https://twitter.com/intent/tweet?text=I've earned ${formatNum(totalEarned)} coins on Farm Idle! 🌾&url=${shareURL}`,'_blank'));
+document.getElementById('share-fb').addEventListener('click',()=>window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareURL}`,'_blank'));
+document.getElementById('share-wa').addEventListener('click',()=>window.open(`https://api.whatsapp.com/send?text=Play Farm Idle free! 🌾 ${shareURL}`,'_blank'));
+document.getElementById('share-cp').addEventListener('click',()=>{navigator.clipboard.writeText(shareURL).then(()=>{const t=document.getElementById('copy-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);});});
+
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));this.classList.add('active');document.getElementById('tab-'+this.dataset.tab).classList.add('active');if(this.dataset.tab==='achievements')renderAchGrid();}));
+document.querySelectorAll('.faq-item').forEach(item=>item.querySelector('.faq-q').addEventListener('click',()=>item.classList.toggle('open')));
+
+// ── INIT ──
+document.getElementById('lv-num').textContent=level;
+updateXPBar();updateHUD();renderField();renderCropShop();renderUpgradeShop();renderAchMini();
+// Re-apply saved upgrades
+purchasedUpgrades.forEach(id=>{const upg=UPGRADES.find(u=>u.id===id);if(upg)applyUpgrade(upg);});
+updateHUD();
+</script>
+</body>
+</html>

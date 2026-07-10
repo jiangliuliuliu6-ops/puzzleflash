@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Block Puzzle Blitz – Free Online Brain Game | Play Now</title>
+<meta name="description" content="Play Block Puzzle Blitz free! Drag & drop blocks, clear rows & columns, unlock achievements, level up. No download needed. Addictive puzzle loved by millions!"/>
+<meta name="keywords" content="block puzzle, free puzzle game, online block game, brain game, tetris puzzle, block blitz, puzzle online, logic game, casual game, 10x10 puzzle"/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://blockpuzzleblitz.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Block Puzzle Blitz – Free Online Brain Game"/>
+<meta property="og:description" content="Drag & drop blocks, clear lines, unlock achievements. Free, no download!"/>
+<meta property="og:url" content="https://blockpuzzleblitz.com/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Block Puzzle Blitz","description":"Free online 10x10 block puzzle game.","genre":["Puzzle","Casual"],"playMode":"SinglePlayer","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#08081a;--surface:#111128;--card:#15153a;--card2:#1c1c45;
+  --border:#2a2a60;--accent:#e94560;--gold:#ffd700;--green:#4ade80;
+  --blue:#4d96ff;--purple:#c77dff;--teal:#2ec4b6;--orange:#ff9f1c;
+  --text:#eeeeff;--muted:#6868a0;
+  --c1:#ff6b6b;--c2:#ffd93d;--c3:#6bcb77;--c4:#4d96ff;
+  --c5:#c77dff;--c6:#ff9f1c;--c7:#2ec4b6;
+  --cell:40px;--gap:3px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;user-select:none;
+  background-image:
+    radial-gradient(ellipse 70% 45% at 10% 10%,#1e0a72 0%,transparent 55%),
+    radial-gradient(ellipse 55% 40% at 90% 90%,#0a1f66 0%,transparent 55%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,#150540 0%,transparent 70%);
+}
+
+/* STARS */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d) ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.05}to{opacity:.9}}
+
+/* LAYOUT */
+#app{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px 10px 60px;gap:12px}
+
+/* ── HEADER ── */
+header{width:100%;max-width:800px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.logo{font-family:'Fredoka One',cursive;font-size:1.9rem;line-height:1;
+  background:linear-gradient(120deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 14px rgba(200,100,255,.4))}
+.logo-sub{font-size:.7rem;display:block;-webkit-text-fill-color:var(--muted);background:none;
+  font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.header-right{display:flex;align-items:center;gap:8px}
+
+/* SCORE BOXES */
+.score-strip{display:flex;gap:6px}
+.score-box{background:var(--card);border:1px solid var(--border);border-radius:13px;
+  padding:5px 12px;text-align:center;min-width:72px}
+.score-box .lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.score-box .val{font-family:'Fredoka One',cursive;font-size:1.4rem;line-height:1.2;color:var(--gold)}
+#best-val{color:#ff8aaa}
+
+/* LIKE BTN */
+.like-btn{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);
+  border-radius:50px;padding:7px 14px;cursor:pointer;transition:all .2s;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;color:var(--text)}
+.like-btn:hover{border-color:var(--accent);transform:scale(1.05)}
+.like-btn.liked{background:linear-gradient(135deg,#e94560,#ff7a7a);border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(233,69,96,.4)}
+.heart{font-size:1rem;transition:transform .2s}
+.like-btn.liked .heart{animation:heartPop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes heartPop{0%{transform:scale(1)}50%{transform:scale(1.7)}100%{transform:scale(1)}}
+
+/* ── GAME CONTROLS BAR ── */
+.ctrl-bar{width:100%;max-width:800px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.ctrl-left{display:flex;gap:7px;align-items:center}
+.ctrl-right{display:flex;gap:7px;align-items:center}
+
+/* LEVEL BADGE */
+.level-badge{display:flex;align-items:center;gap:6px;background:var(--card2);
+  border:1px solid var(--border);border-radius:50px;padding:6px 14px}
+.level-badge .lv-icon{font-size:1rem}
+.level-badge .lv-text{font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--gold)}
+.level-badge .lv-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+/* XP BAR */
+.xp-wrap{flex:1;min-width:100px;max-width:180px}
+.xp-label{font-size:.58rem;color:var(--muted);letter-spacing:.06em;margin-bottom:3px;text-transform:uppercase}
+.xp-track{height:7px;background:var(--surface);border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:99px;transition:width .4s cubic-bezier(.34,1.2,.64,1)}
+
+/* CTRL BUTTONS */
+.c-btn{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);
+  border-radius:50px;padding:7px 15px;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.8rem;color:var(--text);cursor:pointer;transition:all .18s}
+.c-btn:hover{transform:translateY(-1px);filter:brightness(1.15)}
+.c-btn.pause{border-color:var(--orange);color:var(--orange)}
+.c-btn.pause:hover{background:var(--orange);color:#000}
+.c-btn.restart{border-color:var(--accent);color:var(--accent)}
+.c-btn.restart:hover{background:var(--accent);color:#fff}
+.c-btn.share{border-color:var(--green);color:var(--green)}
+.c-btn.share:hover{background:var(--green);color:#000}
+.c-btn.sound{border-color:var(--border);color:var(--muted)}
+.c-btn.sound.on{border-color:var(--teal);color:var(--teal)}
+
+/* ── MAIN AREA ── */
+.game-area{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:800px}
+
+/* INFO BAR — 横向统计条（替代原侧边面板） */
+.info-bar{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:12px 14px;display:flex;align-items:center;gap:10px;transition:border-color .2s}
+.info-card:hover{border-color:var(--blue)}
+.info-card .ic-icon{font-size:1.6rem;line-height:1;flex-shrink:0}
+.info-card .ic-body{}
+.info-card .ic-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px}
+.info-card .ic-val{font-family:'Fredoka One',cursive;font-size:1.5rem;line-height:1.1;color:var(--text)}
+.info-card.streak .ic-val{color:var(--orange)}
+.info-card.combo  .ic-val{color:var(--gold)}
+.info-card.lines  .ic-val{color:var(--teal)}
+.info-card.pieces .ic-val{color:var(--purple)}
+
+/* ACH MINI ROW — 成就迷你横排 */
+.ach-bar{width:100%;display:flex;gap:8px;flex-wrap:wrap}
+.ach-mini{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--border);transition:all .3s;opacity:.42;flex:1;min-width:120px}
+.ach-mini.unlocked{opacity:1;border-color:var(--gold);background:rgba(255,215,0,.07)}
+.ach-icon{font-size:1.05rem;filter:grayscale(1);transition:filter .3s}
+.ach-mini.unlocked .ach-icon{filter:none}
+.ach-info .ach-name{font-size:.7rem;font-weight:800;line-height:1.2}
+.ach-info .ach-desc{font-size:.58rem;color:var(--muted);line-height:1.3}
+
+/* 旧侧边面板兼容（隐藏） */
+.side-panel{display:none}
+.panel-card{}
+.streak-num{}
+.streak-sub{}
+.stat-row{}
+
+@media(max-width:600px){
+  .info-bar{grid-template-columns:repeat(2,1fr)}
+  .ach-bar{display:none}
+}
+
+/* ── BOARD ── */
+.board-col{display:flex;flex-direction:column;align-items:center;gap:14px;position:relative}
+#board-wrap{background:var(--card);border:2px solid var(--border);border-radius:22px;
+  padding:12px;box-shadow:0 0 60px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.04);position:relative}
+#board{display:grid;grid-template-columns:repeat(10,var(--cell));grid-template-rows:repeat(10,var(--cell));gap:var(--gap)}
+.cell{width:var(--cell);height:var(--cell);border-radius:7px;background:var(--surface);
+  border:1px solid var(--border);transition:background .1s,transform .1s;position:relative;overflow:hidden}
+.cell.filled{border-color:transparent;box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 2px 6px rgba(0,0,0,.4)}
+.cell.filled::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.17) 0%,transparent 55%);border-radius:inherit}
+.cell.hover-ok{opacity:.58;transform:scale(.94)}
+.cell.hover-bad{opacity:.25;background:var(--accent)!important}
+.cell.clearing{animation:clearFlash .44s ease forwards}
+@keyframes clearFlash{0%{transform:scale(1);opacity:1}40%{transform:scale(1.25);opacity:1;filter:brightness(2.2)}100%{transform:scale(0);opacity:0}}
+
+/* BOARD OVERLAY (pause / start) */
+.board-overlay{position:absolute;inset:0;border-radius:22px;
+  background:rgba(8,8,26,.88);backdrop-filter:blur(6px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  z-index:20;opacity:0;pointer-events:none;transition:opacity .25s}
+.board-overlay.show{opacity:1;pointer-events:all}
+.ov-icon{font-size:3.5rem;line-height:1}
+.ov-title{font-family:'Fredoka One',cursive;font-size:2rem;text-align:center}
+.ov-sub{font-size:.85rem;color:var(--muted);text-align:center;max-width:220px;line-height:1.5}
+.ov-btn{background:linear-gradient(135deg,var(--blue),var(--purple));border:none;border-radius:50px;
+  padding:12px 36px;font-family:'Fredoka One',cursive;font-size:1.2rem;color:#fff;cursor:pointer;
+  box-shadow:0 6px 20px rgba(77,150,255,.4);transition:transform .15s,box-shadow .15s;margin-top:4px}
+.ov-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(77,150,255,.5)}
+
+/* ── TRAY ── */
+#tray{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap;
+  padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:20px;
+  width:100%;box-shadow:0 0 30px rgba(0,0,0,.4)}
+.piece-slot{display:flex;align-items:center;justify-content:center;width:100px;height:100px;
+  border-radius:14px;border:1.5px dashed var(--border);cursor:grab;transition:transform .15s,opacity .2s,border-color .2s}
+.piece-slot:active{cursor:grabbing}
+.piece-slot.used{opacity:0;pointer-events:none;border-color:transparent}
+.piece-slot:not(.used):hover{transform:scale(1.09);border-color:var(--blue)}
+.piece-grid{display:grid;gap:3px}
+.p-cell{width:20px;height:20px;border-radius:5px;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.22),0 2px 4px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.p-cell::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15) 0%,transparent 55%)}
+
+/* DRAG GHOST */
+#drag-ghost{position:fixed;pointer-events:none;z-index:9999;display:none;transform:translate(-50%,-50%) scale(1.15);opacity:.88}
+#drag-ghost .p-cell{width:28px;height:28px;border-radius:7px}
+
+/* COMBO / SCORE POPUPS */
+.combo-popup{position:fixed;z-index:300;font-family:'Fredoka One',cursive;pointer-events:none;
+  text-shadow:0 0 20px currentColor;animation:floatUp .95s ease forwards}
+.score-popup{position:fixed;z-index:301;font-family:'Fredoka One',cursive;font-size:1.1rem;
+  color:#fff;pointer-events:none;animation:scoreUp .8s ease forwards}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-90px) scale(1.4)}}
+@keyframes scoreUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-50px)}}
+
+/* LEVEL UP BANNER */
+#levelup-banner{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);
+  z-index:400;background:linear-gradient(135deg,var(--blue),var(--purple));
+  border-radius:50px;padding:12px 32px;font-family:'Fredoka One',cursive;font-size:1.3rem;
+  color:#fff;box-shadow:0 8px 30px rgba(77,150,255,.5);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0}
+#levelup-banner.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ACHIEVEMENT TOAST */
+#ach-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  z-index:400;background:var(--card2);border:1px solid var(--gold);
+  border-radius:16px;padding:12px 20px;display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 30px rgba(255,215,0,.2);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;min-width:260px}
+#ach-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.at-icon{font-size:1.6rem}
+.at-title{font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--gold)}
+.at-desc{font-size:.75rem;color:var(--muted)}
+
+/* ── GAME OVER MODAL ── */
+#gameover{display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(4,4,18,.9);backdrop-filter:blur(12px);
+  align-items:center;justify-content:center}
+#gameover.show{display:flex}
+.go-card{background:var(--card2);border:1px solid var(--border);border-radius:28px;
+  padding:40px 44px;text-align:center;max-width:400px;width:92%;
+  animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.go-card h2{font-family:'Fredoka One',cursive;font-size:2.6rem;color:var(--accent);margin-bottom:4px}
+.go-card>p{color:var(--muted);margin-bottom:18px;font-size:.88rem}
+.go-score{font-family:'Fredoka One',cursive;font-size:3rem;color:var(--gold);line-height:1}
+.go-meta{font-size:.78rem;color:var(--muted);margin-bottom:6px}
+.go-new-best{font-size:.9rem;font-weight:800;color:var(--gold);margin-bottom:18px;display:none}
+.go-new-best.show{display:block}
+.go-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0 20px}
+.go-stat{background:var(--surface);border-radius:12px;padding:10px 6px;text-align:center}
+.go-stat .gs-v{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--text)}
+.go-stat .gs-l{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.go-actions{display:flex;flex-direction:column;gap:9px}
+.btn-primary{background:linear-gradient(135deg,#e94560,#ff7a55);border:none;border-radius:50px;
+  padding:13px 44px;font-family:'Fredoka One',cursive;font-size:1.25rem;color:#fff;cursor:pointer;
+  box-shadow:0 6px 22px rgba(233,69,96,.4);transition:transform .15s,box-shadow .15s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(233,69,96,.5)}
+.btn-secondary{background:var(--surface);border:1px solid var(--border);border-radius:50px;
+  padding:9px 28px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;
+  color:var(--text);cursor:pointer;transition:border-color .2s}
+.btn-secondary:hover{border-color:var(--blue)}
+
+/* ── SHARE PANEL ── */
+#share-panel{display:none;position:fixed;inset:0;z-index:150;
+  background:rgba(4,4,18,.85);backdrop-filter:blur(10px);
+  align-items:center;justify-content:center}
+#share-panel.open{display:flex}
+.share-card{background:var(--card2);border:1px solid var(--border);border-radius:26px;
+  padding:32px 36px;text-align:center;max-width:400px;width:92%;animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+.share-card h2{font-family:'Fredoka One',cursive;font-size:1.7rem;margin-bottom:6px}
+.share-card p{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 8px;
+  border-radius:13px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;
+  font-size:.85rem;transition:transform .15s,filter .15s}
+.share-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.share-btn.tw{background:#1da1f2;color:#fff}
+.share-btn.fb{background:#1877f2;color:#fff}
+.share-btn.wa{background:#25d366;color:#fff}
+.share-btn.cp{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.share-close{background:none;border:1px solid var(--border);border-radius:50px;
+  padding:7px 22px;color:var(--muted);cursor:pointer;font-family:'Nunito',sans-serif;
+  font-weight:700;font-size:.82rem;transition:border-color .2s}
+.share-close:hover{border-color:var(--text);color:var(--text)}
+.copy-toast{display:none;color:var(--green);font-size:.78rem;margin-top:6px;font-weight:700}
+.copy-toast.show{display:block}
+
+/* ── HOW TO PLAY ── */
+#how-section{width:100%;max-width:800px}
+.section-title{font-family:'Fredoka One',cursive;font-size:1.45rem;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.tabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+.tab-btn{background:var(--surface);border:1px solid var(--border);border-radius:50px;
+  padding:6px 16px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.8rem;
+  color:var(--muted);cursor:pointer;transition:all .18s}
+.tab-btn.active,.tab-btn:hover{background:var(--card2);border-color:var(--blue);color:var(--text)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.tut-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px}
+.tut-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:16px;transition:border-color .2s}
+.tut-card:hover{border-color:var(--blue)}
+.tut-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:10px}
+.tut-card h3{font-size:.88rem;font-weight:800;margin-bottom:5px}
+.tut-card p{font-size:.76rem;color:var(--muted);line-height:1.6}
+.tip{display:inline-block;margin-top:7px;font-size:.7rem;background:var(--surface);
+  border:1px solid var(--border);border-radius:7px;padding:2px 8px;color:var(--blue);font-weight:700}
+.score-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;margin-bottom:13px}
+.score-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.score-table th{background:var(--surface);padding:9px 13px;text-align:left;color:var(--muted);font-weight:700;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}
+.score-table td{padding:9px 13px;border-bottom:1px solid var(--border)}
+.score-table tr:last-child td{border-bottom:none}
+.score-table .pts{font-family:'Fredoka One',cursive;color:var(--gold)}
+.strat-list{display:flex;flex-direction:column;gap:9px}
+.strat-item{display:flex;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px}
+.strat-num{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--purple);min-width:26px}
+.strat-item h4{font-size:.86rem;font-weight:800;margin-bottom:3px}
+.strat-item p{font-size:.76rem;color:var(--muted);line-height:1.55}
+.faq-list{display:flex;flex-direction:column;gap:7px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden}
+.faq-q{padding:12px 16px;font-weight:800;font-size:.86rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .18s}
+.faq-q:hover{background:var(--card2)}
+.faq-arrow{color:var(--muted);transition:transform .25s;font-size:.68rem}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
+.faq-a p{padding:0 16px 13px;font-size:.78rem;color:var(--muted);line-height:1.6}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-item.open .faq-a{max-height:200px}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:9px}
+.ach-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px;opacity:.4;transition:all .3s}
+.ach-card.unlocked{opacity:1;border-color:var(--gold);background:rgba(255,215,0,.06)}
+.ach-card .ac-icon{font-size:1.8rem;margin-bottom:7px}
+.ach-card .ac-name{font-size:.82rem;font-weight:800;margin-bottom:3px}
+.ach-card .ac-desc{font-size:.72rem;color:var(--muted)}
+.ach-card.unlocked .ac-name{color:var(--gold)}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  :root{--cell:30px;--gap:2px}
+  .logo{font-size:1.4rem}
+  .piece-slot{width:80px;height:80px}
+  .p-cell{width:16px;height:16px}
+  #drag-ghost .p-cell{width:22px;height:22px}
+  .go-card{padding:28px 18px}
+  .share-card{padding:24px 18px}
+  .share-btns{grid-template-columns:1fr}
+}
+@media(max-width:440px){
+  :root{--cell:28px}
+  .ctrl-bar{justify-content:center}
+}
+
+/* ── PUZZLEFLASH SITE HEADER (matches homepage style) ── */
+#site-header{
+  width:100%;background:#020617;
+  padding:13px 5%;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:500;
+  font-family:'Poppins','Nunito',sans-serif;
+}
+#site-header .sh-logo{
+  font-size:22px;font-weight:700;color:#facc15;
+  letter-spacing:1px;text-decoration:none;
+}
+#site-header .sh-logo:hover{opacity:.85}
+#site-header .sh-right{display:flex;align-items:center;gap:12px}
+#site-header .sh-back{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#facc15;color:#0f172a;
+  border:none;border-radius:8px;
+  padding:7px 16px;font-weight:700;font-size:13px;
+  cursor:pointer;font-family:'Poppins','Nunito',sans-serif;
+  text-decoration:none;transition:background .2s,transform .2s;
+  letter-spacing:.03em;
+}
+#site-header .sh-back:hover{background:#fde047;transform:translateX(-2px)}
+#site-header nav{display:flex;gap:4px;align-items:center}
+#site-header nav a{
+  color:#e5e7eb;font-size:12px;font-weight:600;
+  padding:6px 10px;border-radius:6px;transition:.2s;
+  text-decoration:none;letter-spacing:.03em;
+}
+#site-header nav a:hover{color:#facc15}
+#site-header .sh-divider{width:1px;height:20px;background:#1e293b;margin:0 4px}
+
+/* push app content below sticky header */
+#app{padding-top:10px}
+
+@media(max-width:640px){
+  #site-header nav{display:none}
+  #site-header .sh-divider{display:none}
+  #site-header{padding:10px 4%}
+}
+</style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2745753897424989" crossorigin="anonymous"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<!-- ══ PUZZLEFLASH SITE HEADER ══ -->
+<header id="site-header">
+  <a href="/" class="sh-logo">PuzzleFlash</a>
+  <div class="sh-right">
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/about.html">ABOUT</a>
+      <a href="/privacy.html">PRIVACY</a>
+      <a href="/contact.html">CONTACT</a>
+    </nav>
+    <div class="sh-divider"></div>
+    <a href="/" class="sh-back">← Back to Games</a>
+  </div>
+</header>
+<!-- ══════════════════════════════ -->
+
+<div class="stars" id="stars"></div>
+<div id="app">
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Block Puzzle Blitz<span class="logo-sub">✦ free · no download · play now</span></div>
+  <div class="header-right">
+    <div class="score-strip">
+      <div class="score-box"><div class="lbl">Score</div><div class="val" id="score-val">0</div></div>
+      <div class="score-box"><div class="lbl">Best</div><div class="val" id="best-val">0</div></div>
+    </div>
+    <button class="like-btn" id="like-btn" title="Like!">
+      <span class="heart">🤍</span><span id="like-count">4.2k</span>
+    </button>
+  </div>
+</header>
+
+<!-- CONTROLS BAR -->
+<div class="ctrl-bar">
+  <div class="ctrl-left">
+    <div class="level-badge">
+      <span class="lv-icon">⚡</span>
+      <div><div class="lv-label">Level</div><div class="lv-text" id="lv-num">1</div></div>
+    </div>
+    <div class="xp-wrap">
+      <div class="xp-label">XP <span id="xp-txt">0 / 500</span></div>
+      <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="ctrl-right">
+    <button class="c-btn sound on" id="sound-btn" title="Toggle Sound">🔊 Sound</button>
+    <button class="c-btn pause" id="pause-btn" title="Pause / Resume">⏸ Pause</button>
+    <button class="c-btn restart" id="restart-btn" title="Restart">🔄 Restart</button>
+    <button class="c-btn share" id="share-open-btn" title="Share">🔗 Share</button>
+  </div>
+</div>
+
+<!-- MAIN GAME AREA -->
+<div class="game-area">
+
+  <!-- BOARD COLUMN -->
+  <div class="board-col">
+    <div id="board-wrap">
+      <div id="board"></div>
+      <!-- Overlays -->
+      <div class="board-overlay show" id="overlay-start">
+        <div class="ov-icon">🧩</div>
+        <div class="ov-title">Block Puzzle Blitz</div>
+        <div class="ov-sub">Drag blocks onto the grid. Fill rows & columns to clear them!</div>
+        <button class="ov-btn" id="btn-start">▶ Start Game</button>
+      </div>
+      <div class="board-overlay" id="overlay-pause">
+        <div class="ov-icon">⏸</div>
+        <div class="ov-title">Paused</div>
+        <div class="ov-sub">Take a breath. Your game is safe.</div>
+        <button class="ov-btn" id="btn-resume">▶ Resume</button>
+      </div>
+    </div>
+    <div id="tray">
+      <div class="piece-slot" id="slot-0"></div>
+      <div class="piece-slot" id="slot-1"></div>
+      <div class="piece-slot" id="slot-2"></div>
+    </div>
+  </div>
+
+  <!-- INFO BAR: 横向统计 -->
+  <div class="info-bar">
+    <div class="info-card streak">
+      <div class="ic-icon">🔥</div>
+      <div class="ic-body">
+        <div class="ic-label">Streak</div>
+        <div class="ic-val" id="streak-num">0</div>
+      </div>
+    </div>
+    <div class="info-card combo">
+      <div class="ic-icon">💥</div>
+      <div class="ic-body">
+        <div class="ic-label">Best Combo</div>
+        <div class="ic-val" id="stat-combo">0</div>
+      </div>
+    </div>
+    <div class="info-card lines">
+      <div class="ic-icon">📊</div>
+      <div class="ic-body">
+        <div class="ic-label">Lines Cleared</div>
+        <div class="ic-val" id="stat-lines">0</div>
+      </div>
+    </div>
+    <div class="info-card pieces">
+      <div class="ic-icon">🧩</div>
+      <div class="ic-body">
+        <div class="ic-label">Pieces Placed</div>
+        <div class="ic-val" id="stat-pieces">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACH BAR: 成就横排 -->
+  <div class="ach-bar" id="ach-mini-list"></div>
+
+</div><!-- end .game-area -->
+
+<!-- HOW TO PLAY -->
+<section id="how-section" aria-labelledby="how-title">
+  <div class="section-title" id="how-title">📖 How to Play</div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="basics">🎮 Basics</button>
+    <button class="tab-btn" data-tab="scoring">⭐ Scoring</button>
+    <button class="tab-btn" data-tab="strategy">🧠 Strategy</button>
+    <button class="tab-btn" data-tab="achievements">🏆 Achievements</button>
+    <button class="tab-btn" data-tab="faq">❓ FAQ</button>
+  </div>
+
+  <div class="tab-content active" id="tab-basics">
+    <div class="tut-grid">
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(77,150,255,.15)">🖱️</div><h3>Step 1 – Pick a Block</h3><p>Three random blocks appear in the tray below the board. Click and hold (or touch-hold on mobile) to start dragging. On desktop, mouse drag works smoothly.</p><span class="tip">💡 All 3 pieces visible at once</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(108,203,119,.15)">🎯</div><h3>Step 2 – Place on Grid</h3><p>Drag over the 10×10 grid. A <strong>blue highlight</strong> shows where it will land — valid spots glow. A <strong>red highlight</strong> means it won't fit. Release to place.</p><span class="tip">💡 Block snaps to nearest cell</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,215,0,.15)">💥</div><h3>Step 3 – Clear Lines</h3><p>When any full <strong>row</strong> or <strong>column</strong> is completely filled, it clears and you earn points. Both rows and columns can clear simultaneously for massive combos!</p><span class="tip">💡 Rows AND columns clear</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(199,125,255,.15)">🔄</div><h3>Step 4 – New Pieces</h3><p>After placing all 3 blocks in the tray, 3 fresh random pieces appear. You cannot skip or swap — plan each placement thinking about the next 2 pieces too.</p><span class="tip">💡 Think 3 moves ahead</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,107,107,.15)">🏁</div><h3>Step 5 – Game Over</h3><p>The game ends when <strong>none</strong> of the 3 available pieces can fit anywhere on the board. There is no time limit — pure strategic thinking wins!</p><span class="tip">💡 Leave space for big pieces</span></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,159,28,.15)">⚡</div><h3>Level Up System</h3><p>Every line you clear earns XP. Accumulate enough XP to level up! Higher levels unlock harder piece sets but reward more points. Can you reach Level 10?</p><span class="tip">💡 Combos give bonus XP</span></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-scoring">
+    <div class="score-table-wrap">
+      <table class="score-table">
+        <thead><tr><th>Action</th><th>Points</th><th>XP</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Place 1 block cell</td><td class="pts">+2</td><td>+1</td><td>Base placement</td></tr>
+          <tr><td>Clear 1 line</td><td class="pts">+100</td><td>+50</td><td>Row or column</td></tr>
+          <tr><td>🔥 Double clear</td><td class="pts">+250</td><td>+150</td><td>2 lines at once</td></tr>
+          <tr><td>⚡ Triple clear</td><td class="pts">+500</td><td>+350</td><td>3 lines at once</td></tr>
+          <tr><td>💥 ULTRA (4 lines)</td><td class="pts">+1,000</td><td>+600</td><td>Incredible!</td></tr>
+          <tr><td>🌟 MEGA (5+ lines)</td><td class="pts">+1,000×each</td><td>+1,000</td><td>Legend tier</td></tr>
+          <tr><td>🔴 Streak bonus</td><td class="pts">×1.5</td><td>×2</td><td>3+ clears in a row</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tut-grid">
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(255,215,0,.15)">📈</div><h3>Streak Multiplier</h3><p>Clear a line on 3 or more consecutive piece placements to activate a <strong>1.5× score multiplier</strong>. Keep the streak alive for massive point gains!</p></div>
+      <div class="tut-card"><div class="tut-icon" style="background:rgba(77,150,255,.15)">⚡</div><h3>XP & Leveling</h3><p>XP is earned from every action. Level up to increase the XP threshold. Each level requires more XP but makes you a better puzzle strategist over time.</p></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-strategy">
+    <div class="strat-list">
+      <div class="strat-item"><div class="strat-num">1</div><div><h4>Keep the Board Flat</h4><p>Avoid tall stacks or isolated holes. A flat, even board gives all future pieces valid placements and keeps your options open longer.</p></div></div>
+      <div class="strat-item"><div class="strat-num">2</div><div><h4>Set Up Multi-Line Clears</h4><p>Resist clearing one line at a time. Fill 2–3 lines simultaneously for exponentially higher scores. A triple clear (500 pts) is 5× better than clearing each separately.</p></div></div>
+      <div class="strat-item"><div class="strat-num">3</div><div><h4>See All 3 Pieces at Once</h4><p>Before placing piece #1, plan where #2 and #3 will go. This prevents you from accidentally blocking yourself into a corner with no valid placements.</p></div></div>
+      <div class="strat-item"><div class="strat-num">4</div><div><h4>Corner & Edge Strategy</h4><p>Reserve corners for small L-shapes and 2×2 blocks. Large pieces need open space — place them in the center or along edges with room to extend.</p></div></div>
+      <div class="strat-item"><div class="strat-num">5</div><div><h4>Clear Both Rows & Columns</h4><p>Many players focus only on rows. But columns clear too! A tall 1×5 piece can wipe an entire column. Keep both dimensions in mind when planning.</p></div></div>
+      <div class="strat-item"><div class="strat-num">6</div><div><h4>Maintain Streak for Multipliers</h4><p>If you can arrange your placements so every piece clears at least one line, you'll maintain a streak multiplier of 1.5× — this can double your total score over a long game!</p></div></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-achievements">
+    <div class="ach-grid" id="ach-grid"></div>
+  </div>
+
+  <div class="tab-content" id="tab-faq">
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">Can I undo a move? <span class="faq-arrow">▼</span></div><div class="faq-a"><p>No — moves are final, just like the original arcade version. This is what makes every placement meaningful and the game so strategically satisfying!</p></div></div>
+      <div class="faq-item"><div class="faq-q">Can I rotate pieces? <span class="faq-arrow">▼</span></div><div class="faq-a"><p>No rotation — pieces are fixed as shown in the tray. This is a core rule of the block puzzle genre. The challenge is fitting pieces in their given orientation.</p></div></div>
+      <div class="faq-item"><div class="faq-q">How does Pause work? <span class="faq-arrow">▼</span></div><div class="faq-a"><p>Click "Pause" (or press Space) to freeze the game. The board blurs and all interaction is blocked. Click "Resume" or press Space again to continue exactly where you left off.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Is my high score saved? <span class="faq-arrow">▼</span></div><div class="faq-a"><p>Yes! Your best score, level, achievements and stats are saved in your browser's localStorage. They persist after closing the tab unless you clear browser data.</p></div></div>
+      <div class="faq-item"><div class="faq-q">What are Achievements? <span class="faq-arrow">▼</span></div><div class="faq-a"><p>Achievements are special milestones you unlock by playing — clearing 100 lines, getting a 5× combo, reaching level 5, and more. Check the Achievements tab to see all of them!</p></div></div>
+      <div class="faq-item"><div class="faq-q">Does the game have a time limit? <span class="faq-arrow">▼</span></div><div class="faq-a"><p>No time pressure at all! Block Puzzle Blitz is relaxing, strategic, and completely self-paced. The only limit is the board space available.</p></div></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end #app -->
+
+<!-- LEVEL UP BANNER -->
+<div id="levelup-banner">⚡ Level Up! You're now Level <span id="lv-banner-num">2</span>!</div>
+
+<!-- ACH TOAST -->
+<div id="ach-toast">
+  <div class="at-icon" id="at-icon">🏆</div>
+  <div><div class="at-title" id="at-title">Achievement Unlocked!</div><div class="at-desc" id="at-desc"></div></div>
+</div>
+
+<!-- GAME OVER -->
+<div id="gameover">
+  <div class="go-card">
+    <h2>Game Over!</h2>
+    <p>No more blocks can be placed.</p>
+    <div class="go-score" id="go-score">0</div>
+    <div class="go-meta" id="go-best">Best: 0</div>
+    <div class="go-new-best" id="go-new-best">🏆 New Personal Best!</div>
+    <div class="go-stats">
+      <div class="go-stat"><div class="gs-v" id="gs-lines">0</div><div class="gs-l">Lines</div></div>
+      <div class="go-stat"><div class="gs-v" id="gs-pieces">0</div><div class="gs-l">Pieces</div></div>
+      <div class="go-stat"><div class="gs-v" id="gs-level">1</div><div class="gs-l">Level</div></div>
+    </div>
+    <div class="go-actions">
+      <button class="btn-primary" id="btn-restart-go">Play Again 🚀</button>
+      <button class="btn-secondary" id="btn-share-score">Share Score 🔗</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE PANEL -->
+<div id="share-panel">
+  <div class="share-card">
+    <h2>🔗 Share the Fun!</h2>
+    <p>Challenge your friends to beat your score!</p>
+    <div class="share-btns">
+      <button class="share-btn tw" id="share-tw">𝕏 Twitter</button>
+      <button class="share-btn fb" id="share-fb">f Facebook</button>
+      <button class="share-btn wa" id="share-wa">📱 WhatsApp</button>
+      <button class="share-btn cp" id="share-cp">📋 Copy Link</button>
+    </div>
+    <div class="copy-toast" id="copy-toast">✅ Link copied!</div>
+    <button class="share-close" id="share-close">Close</button>
+  </div>
+</div>
+
+<!-- DRAG GHOST -->
+<div id="drag-ghost"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  STARS
+// ══════════════════════════════════════════════════════
+(()=>{
+  const c=document.getElementById('stars');
+  for(let i=0;i<100;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=Math.random()*2.2+.6;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+2).toFixed(1)}s;animation-delay:${(Math.random()*6).toFixed(1)}s`;
+    c.appendChild(s);
+  }
+})();
+
+// ══════════════════════════════════════════════════════
+//  PIECES
+// ══════════════════════════════════════════════════════
+const PIECES=[
+  {shape:[[1]]},{shape:[[1,1]]},{shape:[[1],[1]]},
+  {shape:[[1,1,1]]},{shape:[[1],[1],[1]]},
+  {shape:[[1,1,1,1]]},{shape:[[1],[1],[1],[1]]},
+  {shape:[[1,1,1,1,1]]},{shape:[[1],[1],[1],[1],[1]]},
+  {shape:[[1,1],[1,1]]},
+  {shape:[[1,1,1],[1,1,1],[1,1,1]]},
+  {shape:[[1,0],[1,0],[1,1]]},{shape:[[0,1],[0,1],[1,1]]},
+  {shape:[[1,1],[1,0],[1,0]]},{shape:[[1,1],[0,1],[0,1]]},
+  {shape:[[1,1,1],[0,1,0]]},{shape:[[0,1,0],[1,1,1]]},
+  {shape:[[1,0],[1,1],[1,0]]},{shape:[[0,1],[1,1],[0,1]]},
+  {shape:[[0,1,1],[1,1,0]]},{shape:[[1,0],[1,1],[0,1]]},
+  {shape:[[1,1,0],[0,1,1]]},{shape:[[0,1],[1,1],[1,0]]},
+  {shape:[[1,1],[1,1],[1,1]]},{shape:[[1,1,1],[1,1,1]]},
+  {shape:[[1,1],[1,0]]},{shape:[[1,1],[0,1]]},
+  {shape:[[1,0],[1,1]]},{shape:[[0,1],[1,1]]},
+];
+const COLORS=['--c1','--c2','--c3','--c4','--c5','--c6','--c7'];
+const GRID=10;
+
+// ══════════════════════════════════════════════════════
+//  ACHIEVEMENTS DEF
+// ══════════════════════════════════════════════════════
+const ACH_DEFS=[
+  {id:'first_clear', icon:'🎯', name:'First Clear',    desc:'Clear your first line',          check:s=>s.totalLines>=1},
+  {id:'ten_lines',   icon:'🔟', name:'Line Collector', desc:'Clear 10 lines total',            check:s=>s.totalLines>=10},
+  {id:'fifty_lines', icon:'💯', name:'Line Master',    desc:'Clear 50 lines total',            check:s=>s.totalLines>=50},
+  {id:'hundred',     icon:'🌟', name:'Centurion',      desc:'Clear 100 lines',                 check:s=>s.totalLines>=100},
+  {id:'combo2',      icon:'🔥', name:'Double Trouble',  desc:'Clear 2 lines at once',           check:s=>s.bestCombo>=2},
+  {id:'combo3',      icon:'⚡', name:'Triple Threat',   desc:'Clear 3 lines at once',           check:s=>s.bestCombo>=3},
+  {id:'combo4',      icon:'💥', name:'Ultra Combo',     desc:'Clear 4+ lines at once',          check:s=>s.bestCombo>=4},
+  {id:'score1k',     icon:'🥉', name:'Bronze Player',   desc:'Score 1,000 points',             check:s=>s.highScore>=1000},
+  {id:'score5k',     icon:'🥈', name:'Silver Player',   desc:'Score 5,000 points',             check:s=>s.highScore>=5000},
+  {id:'score10k',    icon:'🥇', name:'Gold Player',     desc:'Score 10,000 points',            check:s=>s.highScore>=10000},
+  {id:'level5',      icon:'⚡', name:'Power Leveler',   desc:'Reach Level 5',                  check:s=>s.maxLevel>=5},
+  {id:'streak3',     icon:'🔴', name:'On Fire',         desc:'Get a 3-line streak',            check:s=>s.bestStreak>=3},
+  {id:'pieces50',    icon:'🧩', name:'Puzzle Addict',   desc:'Place 50 pieces',                check:s=>s.totalPieces>=50},
+];
+
+// ══════════════════════════════════════════════════════
+//  SOUND (Web Audio API — no external files needed)
+// ══════════════════════════════════════════════════════
+let audioCtx=null,soundOn=true;
+function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function beep(freq,dur,type='sine',vol=.18){
+  if(!soundOn)return;
+  try{
+    const a=getAudio();
+    const o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.type=type;o.frequency.value=freq;
+    g.gain.setValueAtTime(vol,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,a.currentTime+dur);
+    o.start();o.stop(a.currentTime+dur);
+  }catch(e){}
+}
+function playPlace(){beep(440,.08,'square',.1);setTimeout(()=>beep(550,.06,'square',.08),50);}
+function playClear(n){
+  const freqs=[523,659,784,1047];
+  for(let i=0;i<Math.min(n,4);i++) setTimeout(()=>beep(freqs[i],.15,'sine',.15+i*.02),i*80);
+}
+function playLevelUp(){[523,659,784,1047,1319].forEach((f,i)=>setTimeout(()=>beep(f,.2,'sine',.2),i*100));}
+function playGameOver(){[330,294,262,220].forEach((f,i)=>setTimeout(()=>beep(f,.25,'sawtooth',.12),i*120));}
+
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+let board,score,pieces,paused,gameStarted,gameOver;
+let streak,bestStreakSession,statLines,statPieces,statCombo;
+let level,xp,xpNeeded;
+let best,totalLines,totalPieces,highScore,maxLevel,bestCombo,bestStreak,unlockedAch;
+let likeCount,liked;
+
+function loadPersist(){
+  best        = parseInt(localStorage.getItem('bpb_best')||'0');
+  totalLines  = parseInt(localStorage.getItem('bpb_lines')||'0');
+  totalPieces = parseInt(localStorage.getItem('bpb_pieces')||'0');
+  highScore   = parseInt(localStorage.getItem('bpb_best')||'0');
+  maxLevel    = parseInt(localStorage.getItem('bpb_maxlv')||'1');
+  bestCombo   = parseInt(localStorage.getItem('bpb_combo')||'0');
+  bestStreak  = parseInt(localStorage.getItem('bpb_streak')||'0');
+  unlockedAch = JSON.parse(localStorage.getItem('bpb_ach')||'[]');
+  likeCount   = parseInt(localStorage.getItem('bpb_likes')||'4200');
+  liked       = localStorage.getItem('bpb_liked')==='1';
+}
+function savePersist(){
+  localStorage.setItem('bpb_best',best);
+  localStorage.setItem('bpb_lines',totalLines);
+  localStorage.setItem('bpb_pieces',totalPieces);
+  localStorage.setItem('bpb_maxlv',maxLevel);
+  localStorage.setItem('bpb_combo',bestCombo);
+  localStorage.setItem('bpb_streak',bestStreak);
+  localStorage.setItem('bpb_ach',JSON.stringify(unlockedAch));
+}
+
+function initGame(){
+  board    = Array.from({length:GRID},()=>Array(GRID).fill(0));
+  score=0; pieces=[null,null,null];
+  paused=false; gameStarted=false; gameOver=false;
+  streak=0; bestStreakSession=0;
+  statLines=0; statPieces=0; statCombo=0;
+  level=1; xp=0; xpNeeded=500;
+  loadPersist();
+  updateScoreDisplay(); renderBoard(); renderXP();
+  document.getElementById('streak-num').textContent='0';
+  document.getElementById('stat-lines').textContent='0';
+  document.getElementById('stat-pieces').textContent='0';
+  document.getElementById('stat-combo').textContent='0';
+  syncLikeBtn(); renderAchMini(); renderAchGrid();
+  showOverlay('start');
+  setPause(false,true);
+  dealPieces();
+}
+
+// ══════════════════════════════════════════════════════
+//  OVERLAYS
+// ══════════════════════════════════════════════════════
+function showOverlay(which){
+  document.getElementById('overlay-start').classList.toggle('show', which==='start');
+  document.getElementById('overlay-pause').classList.toggle('show', which==='pause');
+}
+function hideOverlays(){
+  document.getElementById('overlay-start').classList.remove('show');
+  document.getElementById('overlay-pause').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════
+//  PAUSE / RESUME
+// ══════════════════════════════════════════════════════
+function setPause(p, silent=false){
+  if(!gameStarted && !silent) return;
+  paused=p;
+  document.getElementById('pause-btn').textContent = p ? '▶ Resume' : '⏸ Pause';
+  if(p) showOverlay('pause'); else if(gameStarted) hideOverlays();
+}
+function togglePause(){
+  if(!gameStarted || gameOver) return;
+  setPause(!paused);
+}
+document.getElementById('pause-btn').addEventListener('click',togglePause);
+document.getElementById('btn-resume').addEventListener('click',()=>setPause(false));
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.target.closest('button')){e.preventDefault();togglePause();}});
+
+// ══════════════════════════════════════════════════════
+//  START
+// ══════════════════════════════════════════════════════
+document.getElementById('btn-start').addEventListener('click',()=>{
+  gameStarted=true; hideOverlays();
+});
+
+// ══════════════════════════════════════════════════════
+//  RESTART
+// ══════════════════════════════════════════════════════
+function restartGame(){
+  document.getElementById('gameover').classList.remove('show');
+  initGame();
+}
+document.getElementById('restart-btn').addEventListener('click',()=>{
+  if(gameStarted && !gameOver){
+    if(!confirm('Restart? Current progress will be lost.')) return;
+  }
+  restartGame();
+});
+document.getElementById('btn-restart-go').addEventListener('click',restartGame);
+
+// ══════════════════════════════════════════════════════
+//  BOARD RENDER
+// ══════════════════════════════════════════════════════
+function renderBoard(){
+  const b=document.getElementById('board'); b.innerHTML='';
+  for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++){
+    const el=document.createElement('div');
+    el.className='cell'+(board[r][c]?' filled':'');
+    if(board[r][c]) el.style.background=`var(${board[r][c]})`;
+    el.dataset.r=r; el.dataset.c=c;
+    b.appendChild(el);
+  }
+}
+const getCell=(r,c)=>document.querySelector(`#board .cell[data-r="${r}"][data-c="${c}"]`);
+
+// ══════════════════════════════════════════════════════
+//  PIECES
+// ══════════════════════════════════════════════════════
+function renderPiece(slot,piece){
+  const el=document.getElementById(`slot-${slot}`);
+  if(!piece){el.innerHTML='';el.classList.add('used');return;}
+  el.classList.remove('used');
+  const rows=piece.shape.length,cols=piece.shape[0].length;
+  const g=document.createElement('div');
+  g.className='piece-grid';
+  g.style.gridTemplateColumns=`repeat(${cols},20px)`;
+  g.style.gridTemplateRows=`repeat(${rows},20px)`;
+  piece.shape.forEach(row=>row.forEach(v=>{
+    const c=document.createElement('div');
+    if(v){c.className='p-cell';c.style.background=`var(${piece.color})`;}
+    else{c.style.width='20px';c.style.height='20px';}
+    g.appendChild(c);
+  }));
+  el.innerHTML=''; el.appendChild(g);
+}
+function dealPieces(){
+  for(let i=0;i<3;i++) if(pieces[i]===null){pieces[i]=randomPiece();renderPiece(i,pieces[i]);}
+}
+function randomPiece(){
+  const def=PIECES[Math.floor(Math.random()*PIECES.length)];
+  return{shape:def.shape,color:COLORS[Math.floor(Math.random()*COLORS.length)]};
+}
+
+// ══════════════════════════════════════════════════════
+//  LOGIC
+// ══════════════════════════════════════════════════════
+function canPlace(shape,r,c){
+  for(let dr=0;dr<shape.length;dr++) for(let dc=0;dc<shape[0].length;dc++){
+    if(!shape[dr][dc]) continue;
+    const nr=r+dr,nc=c+dc;
+    if(nr<0||nr>=GRID||nc<0||nc>=GRID||board[nr][nc]) return false;
+  }
+  return true;
+}
+function placePiece(shape,color,r,c){
+  for(let dr=0;dr<shape.length;dr++) for(let dc=0;dc<shape[0].length;dc++)
+    if(shape[dr][dc]) board[r+dr][c+dc]=color;
+}
+function clearLines(){
+  const fR=[],fC=[];
+  for(let r=0;r<GRID;r++) if(board[r].every(v=>v)) fR.push(r);
+  for(let c=0;c<GRID;c++) if(board.every(row=>row[c])) fC.push(c);
+  const cleared=fR.length+fC.length;
+  if(!cleared) return 0;
+  const anim=new Set();
+  fR.forEach(r=>{for(let c=0;c<GRID;c++)anim.add(`${r},${c}`);});
+  fC.forEach(c=>{for(let r=0;r<GRID;r++)anim.add(`${r},${c}`);});
+  anim.forEach(k=>{const[r,c]=k.split(',');const el=getCell(+r,+c);if(el)el.classList.add('clearing');});
+  setTimeout(()=>{
+    fR.forEach(r=>{for(let c=0;c<GRID;c++)board[r][c]=0;});
+    fC.forEach(c=>{for(let r=0;r<GRID;r++)board[r][c]=0;});
+    renderBoard();
+  },450);
+  return cleared;
+}
+
+// ══════════════════════════════════════════════════════
+//  XP & LEVEL
+// ══════════════════════════════════════════════════════
+function renderXP(){
+  document.getElementById('lv-num').textContent=level;
+  document.getElementById('xp-txt').textContent=`${xp} / ${xpNeeded}`;
+  document.getElementById('xp-fill').style.width=Math.min(100,(xp/xpNeeded*100))+'%';
+}
+function addXP(amount){
+  xp+=amount;
+  while(xp>=xpNeeded){
+    xp-=xpNeeded; level++;
+    xpNeeded=Math.round(xpNeeded*1.4);
+    if(level>maxLevel){maxLevel=level;localStorage.setItem('bpb_maxlv',maxLevel);}
+    showLevelUp();
+    playLevelUp();
+  }
+  renderXP();
+}
+function showLevelUp(){
+  const b=document.getElementById('levelup-banner');
+  document.getElementById('lv-banner-num').textContent=level;
+  b.classList.add('show');
+  setTimeout(()=>b.classList.remove('show'),2800);
+}
+
+// ══════════════════════════════════════════════════════
+//  SCORE
+// ══════════════════════════════════════════════════════
+function addScore(cells,lines,px,py){
+  let pts=cells*2, xpGain=cells;
+  const mult=(streak>=3)?1.5:1;
+  if(lines===1){pts+=100;xpGain+=50;}
+  else if(lines===2){pts+=250;xpGain+=150;}
+  else if(lines===3){pts+=500;xpGain+=350;}
+  else if(lines>=4){pts+=1000*(lines-3);xpGain+=600;}
+  pts=Math.round(pts*mult);
+  score+=pts;
+  if(score>best){best=score;localStorage.setItem('bpb_best',best);}
+  if(score>highScore) highScore=score;
+  updateScoreDisplay();
+  addXP(xpGain);
+  showScorePop(`+${pts}`,px,py);
+  if(lines>=2) showComboPop(lines,px,py);
+}
+function updateScoreDisplay(){
+  document.getElementById('score-val').textContent=score.toLocaleString();
+  document.getElementById('best-val').textContent=best.toLocaleString();
+}
+function showComboPop(n,x,y){
+  const labels=['','','🔥 Double!','⚡ Triple!','💥 ULTRA!','🌟 MEGA COMBO!'];
+  const txt=labels[Math.min(n,5)]||`${n}× COMBO!`;
+  const el=document.createElement('div');
+  el.className='combo-popup';
+  el.style.cssText=`left:${(x||innerWidth/2)-70}px;top:${(y||innerHeight/2)-40}px;font-size:${1.5+n*.15}rem;color:var(--gold)`;
+  el.textContent=txt; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),960);
+}
+function showScorePop(txt,x,y){
+  const el=document.createElement('div');
+  el.className='score-popup';
+  el.style.cssText=`left:${(x||innerWidth/2)-20}px;top:${(y||innerHeight/2)+30}px`;
+  el.textContent=txt; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),820);
+}
+
+// ══════════════════════════════════════════════════════
+//  ACHIEVEMENTS
+// ══════════════════════════════════════════════════════
+function getPersistStats(){
+  return{totalLines,totalPieces,highScore,maxLevel,bestCombo,bestStreak};
+}
+function checkAchievements(){
+  const stats=getPersistStats();
+  ACH_DEFS.forEach(a=>{
+    if(!unlockedAch.includes(a.id) && a.check(stats)){
+      unlockedAch.push(a.id);
+      savePersist();
+      showAchToast(a);
+      renderAchMini(); renderAchGrid();
+    }
+  });
+}
+function showAchToast(a){
+  document.getElementById('at-icon').textContent=a.icon;
+  document.getElementById('at-title').textContent=a.name;
+  document.getElementById('at-desc').textContent=a.desc;
+  const t=document.getElementById('ach-toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+function renderAchMini(){
+  const el=document.getElementById('ach-mini-list');
+  el.innerHTML='';
+  ACH_DEFS.forEach(a=>{
+    const d=document.createElement('div');
+    d.className='ach-mini'+(unlockedAch.includes(a.id)?' unlocked':'');
+    d.innerHTML=`<span class="ach-icon">${a.icon}</span><div class="ach-info"><div class="ach-name">${a.name}</div><div class="ach-desc">${a.desc}</div></div>`;
+    el.appendChild(d);
+  });
+}
+function renderAchGrid(){
+  const el=document.getElementById('ach-grid');
+  if(!el) return;
+  el.innerHTML='';
+  ACH_DEFS.forEach(a=>{
+    const d=document.createElement('div');
+    d.className='ach-card'+(unlockedAch.includes(a.id)?' unlocked':'');
+    d.innerHTML=`<div class="ac-icon">${a.icon}</div><div class="ac-name">${a.name}</div><div class="ac-desc">${a.desc}</div>`;
+    el.appendChild(d);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  GAME OVER
+// ══════════════════════════════════════════════════════
+function checkGameOver(){
+  const active=pieces.filter(p=>p!==null);
+  if(!active.length) return;
+  const fit=active.some(p=>{
+    for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++) if(canPlace(p.shape,r,c)) return true;
+    return false;
+  });
+  if(!fit) setTimeout(triggerGameOver,500);
+}
+function triggerGameOver(){
+  gameOver=true;
+  playGameOver();
+  savePersist();
+  const isNew=score>0&&score>=best;
+  document.getElementById('go-score').textContent=score.toLocaleString();
+  document.getElementById('go-best').textContent='Best: '+best.toLocaleString();
+  document.getElementById('go-new-best').classList.toggle('show',isNew);
+  document.getElementById('gs-lines').textContent=statLines;
+  document.getElementById('gs-pieces').textContent=statPieces;
+  document.getElementById('gs-level').textContent=level;
+  document.getElementById('gameover').classList.add('show');
+}
+
+// ══════════════════════════════════════════════════════
+//  LIKE
+// ══════════════════════════════════════════════════════
+function syncLikeBtn(){
+  const btn=document.getElementById('like-btn');
+  btn.querySelector('.heart').textContent=liked?'❤️':'🤍';
+  btn.classList.toggle('liked',liked);
+  const n=likeCount;
+  document.getElementById('like-count').textContent=n>=1000?(n/1000).toFixed(1)+'k':n;
+}
+document.getElementById('like-btn').addEventListener('click',()=>{
+  liked=!liked; likeCount+=liked?1:-1;
+  localStorage.setItem('bpb_liked',liked?'1':'0');
+  localStorage.setItem('bpb_likes',likeCount);
+  syncLikeBtn();
+});
+
+// ══════════════════════════════════════════════════════
+//  SOUND TOGGLE
+// ══════════════════════════════════════════════════════
+document.getElementById('sound-btn').addEventListener('click',()=>{
+  soundOn=!soundOn;
+  const b=document.getElementById('sound-btn');
+  b.textContent=soundOn?'🔊 Sound':'🔇 Muted';
+  b.classList.toggle('on',soundOn);
+});
+
+// ══════════════════════════════════════════════════════
+//  SHARE
+// ══════════════════════════════════════════════════════
+const SHARE_URL='https://blockpuzzleblitz.com/';
+function getShareTxt(){return`I scored ${score.toLocaleString()} pts at Level ${level} in Block Puzzle Blitz! 🧩🔥 Can you beat me?`;}
+function openShare(){document.getElementById('share-panel').classList.add('open');}
+function closeShare(){document.getElementById('share-panel').classList.remove('open');document.getElementById('copy-toast').classList.remove('show');}
+document.getElementById('share-open-btn').addEventListener('click',openShare);
+document.getElementById('share-close').addEventListener('click',closeShare);
+document.getElementById('share-panel').addEventListener('click',e=>{if(e.target.id==='share-panel')closeShare();});
+document.getElementById('btn-share-score').addEventListener('click',()=>{document.getElementById('gameover').classList.remove('show');openShare();});
+document.getElementById('share-tw').addEventListener('click',()=>window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareTxt())}&url=${encodeURIComponent(SHARE_URL)}`,'_blank'));
+document.getElementById('share-fb').addEventListener('click',()=>window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SHARE_URL)}&quote=${encodeURIComponent(getShareTxt())}`,'_blank'));
+document.getElementById('share-wa').addEventListener('click',()=>window.open(`https://wa.me/?text=${encodeURIComponent(getShareTxt()+' '+SHARE_URL)}`,'_blank'));
+document.getElementById('share-cp').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(getShareTxt()+' '+SHARE_URL);}catch(e){}
+  const t=document.getElementById('copy-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+});
+
+// ══════════════════════════════════════════════════════
+//  DRAG & DROP
+// ══════════════════════════════════════════════════════
+const ghost=document.getElementById('drag-ghost');
+let dragSlot=-1,dragPiece=null,lastHover=[];
+
+function buildGhost(piece){
+  const rows=piece.shape.length,cols=piece.shape[0].length;
+  const g=document.createElement('div');
+  g.className='piece-grid';
+  g.style.gridTemplateColumns=`repeat(${cols},28px)`;
+  g.style.gridTemplateRows=`repeat(${rows},28px)`;
+  piece.shape.forEach(row=>row.forEach(v=>{
+    const c=document.createElement('div');
+    if(v){c.className='p-cell';c.style.background=`var(${piece.color})`;}
+    else{c.style.width='28px';c.style.height='28px';}
+    g.appendChild(c);
+  }));
+  ghost.innerHTML='';ghost.appendChild(g);
+}
+function startDrag(idx,cx,cy){
+  if(!pieces[idx]||paused||!gameStarted||gameOver) return;
+  dragSlot=idx; dragPiece=pieces[idx];
+  buildGhost(dragPiece);
+  ghost.style.display='block'; moveGhost(cx,cy);
+  document.getElementById(`slot-${idx}`).style.opacity='.2';
+}
+function moveGhost(x,y){
+  ghost.style.left=x+'px'; ghost.style.top=y+'px';
+  clearPrev();
+  const el=document.elementFromPoint(x,y);
+  if(el&&el.dataset.r!==undefined&&dragPiece){
+    const r=+el.dataset.r,c=+el.dataset.c,sh=dragPiece.shape;
+    const br=r-Math.floor(sh.length/2),bc=c-Math.floor(sh[0].length/2);
+    const ok=canPlace(sh,br,bc);
+    for(let dr=0;dr<sh.length;dr++) for(let dc=0;dc<sh[0].length;dc++){
+      if(!sh[dr][dc]) continue;
+      const ce=getCell(br+dr,bc+dc);
+      if(ce){ce.classList.add(ok?'hover-ok':'hover-bad');lastHover.push(ce);}
+    }
+  }
+}
+function clearPrev(){lastHover.forEach(e=>e.classList.remove('hover-ok','hover-bad'));lastHover=[];}
+function endDrag(x,y){
+  clearPrev(); ghost.style.display='none';
+  if(dragSlot>=0) document.getElementById(`slot-${dragSlot}`).style.opacity='';
+  const el=document.elementFromPoint(x,y);
+  if(el&&el.dataset.r!==undefined&&dragPiece){
+    const r=+el.dataset.r,c=+el.dataset.c,sh=dragPiece.shape;
+    const br=r-Math.floor(sh.length/2),bc=c-Math.floor(sh[0].length/2);
+    if(canPlace(sh,br,bc)){
+      let cnt=0; sh.forEach(row=>row.forEach(v=>{if(v)cnt++;}));
+      placePiece(sh,dragPiece.color,br,bc);
+      renderBoard(); playPlace();
+      const lines=clearLines();
+
+      // Streak
+      if(lines>0){streak++;bestStreakSession=Math.max(bestStreakSession,streak);}
+      else streak=0;
+      statLines+=lines; statPieces++; totalLines+=lines; totalPieces++;
+      if(lines>statCombo) statCombo=lines;
+      if(lines>bestCombo) bestCombo=lines;
+      if(streak>bestStreak) bestStreak=streak;
+
+      document.getElementById('streak-num').textContent=streak;
+      document.getElementById('stat-lines').textContent=statLines;
+      document.getElementById('stat-pieces').textContent=statPieces;
+      document.getElementById('stat-combo').textContent=statCombo;
+
+      if(lines>0) playClear(lines);
+      addScore(cnt,lines,x,y);
+      checkAchievements();
+
+      pieces[dragSlot]=null; renderPiece(dragSlot,null);
+      if(pieces.every(p=>p===null)){
+        setTimeout(()=>{for(let i=0;i<3;i++){pieces[i]=randomPiece();renderPiece(i,pieces[i]);}checkGameOver();},470);
+      } else setTimeout(checkGameOver,470);
+    }
+  }
+  dragSlot=-1; dragPiece=null;
+}
+document.querySelectorAll('.piece-slot').forEach((s,i)=>{
+  s.addEventListener('mousedown',e=>{e.preventDefault();startDrag(i,e.clientX,e.clientY);});
+  s.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0];startDrag(i,t.clientX,t.clientY);},{passive:false});
+});
+document.addEventListener('mousemove',e=>{if(dragPiece)moveGhost(e.clientX,e.clientY);});
+document.addEventListener('mouseup',e=>{if(dragPiece)endDrag(e.clientX,e.clientY);});
+document.addEventListener('touchmove',e=>{if(!dragPiece)return;e.preventDefault();const t=e.touches[0];moveGhost(t.clientX,t.clientY);},{passive:false});
+document.addEventListener('touchend',e=>{if(!dragPiece)return;const t=e.changedTouches[0];endDrag(t.clientX,t.clientY);});
+
+// ══════════════════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════════════════
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>item.classList.toggle('open'));
+});
+
+// ══════════════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════════════
+initGame();
+</script>
+
+<article style="display:none" aria-hidden="true">
+  <h1>Block Puzzle Blitz – Free Online Block Puzzle Game</h1>
+  <p>Block Puzzle Blitz is a free browser-based block puzzle game. Drag and drop colorful blocks onto a 10×10 grid. Fill rows or columns to clear them and score. Features: Start/Pause/Restart controls, level system, streak multipliers, achievements, sound effects, share on social media. No download needed.</p>
+  <p>Keywords: block puzzle, free puzzle game, 10x10 block puzzle, brain game, casual game, drag drop puzzle, logic game, achievements puzzle game.</p>
+</article>
+
+<!-- ══ PUZZLEFLASH SITE FOOTER ══ -->
+<footer style="text-align:center;padding:36px 20px;border-top:1px solid #1e293b;color:#94a3b8;font-size:13px;font-family:'Poppins','Nunito',sans-serif;background:#020617;margin-top:20px">
+  <div style="margin-bottom:12px">
+    <a href="/" style="color:#94a3b8;text-decoration:underline;margin:0 10px">Home</a>
+    <a href="/about.html" style="color:#94a3b8;text-decoration:underline;margin:0 10px">About Us</a>
+    <a href="/privacy.html" style="color:#94a3b8;text-decoration:underline;margin:0 10px">Privacy Policy</a>
+    <a href="/contact.html" style="color:#94a3b8;text-decoration:underline;margin:0 10px">Contact</a>
+  </div>
+  <p>© 2026 <span style="color:#facc15;font-weight:700">PuzzleFlash</span> — Built for Gamers.</p>
+</footer>
+<!-- ════════════════════════════ -->
+
+</body>
+</html>

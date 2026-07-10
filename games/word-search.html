@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordMind | Free Daily Word Puzzle Game</title>
+    <meta name="description" content="WordMind is a free daily word puzzle game where you guess the 5-letter word in 6 tries. Challenge your vocabulary and logic skills every day!">
+    <meta name="keywords" content="word game, word puzzle, daily puzzle, vocabulary game, brain game, word challenge, 5 letter word, free word game, online word game">
+    <meta name="author" content="WordMind">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQR49JQS45"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-JQR49JQS45');
+    </script>
+    
+    <style>
+        /* Minimalist styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #3b82f6;
+            margin: 5px 0;
+        }
+        
+        .subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            background: #1e293b;
+            border-radius: 8px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-num {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin: 20px 0;
+        }
+        
+        .row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+        
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #334155;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .cell.filled {
+            border-color: #64748b;
+        }
+        
+        .cell.correct { background: #10b981; border-color: #10b981; }
+        .cell.present { background: #f59e0b; border-color: #f59e0b; }
+        .cell.absent { background: #475569; border-color: #475569; }
+        
+        .keyboard {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        
+        .key-row {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+        
+        .key {
+            height: 45px;
+            flex: 1;
+            background: #334155;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            min-width: 30px;
+        }
+        
+        .key.wide { flex: 1.5; font-size: 14px; }
+        .key.correct { background: #10b981; }
+        .key.present { background: #f59e0b; }
+        .key.absent { background: #475569; }
+        
+        .message {
+            background: #1e293b;
+            border-left: 4px solid #3b82f6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.show { display: block; }
+        
+        .hints {
+            background: #1e293b;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .hint-title {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .hint-words {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        
+        /* Leaderboard section */
+        .leaderboard {
+            background: #1e293b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        
+        .leaderboard-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #3b82f6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .player-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        #playerName {
+            flex: 1;
+            padding: 10px 12px;
+            background: #334155;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        #playerName:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        #saveScore {
+            padding: 10px 20px;
+            background: #3b82f6;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .player-rank {
+            width: 28px;
+            height: 28px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .player-score {
+            font-size: 16px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            background: #3b82f6;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .share {
+            background: #1e293b;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        
+        .share.show { display: block; }
+        
+        /* Game instructions - placed at bottom */
+        .instructions {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 12px 15px;
+            margin: 15px 0 5px 0;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .instructions-title {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .instructions-content {
+            font-size: 11px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        
+        .instructions-list {
+            margin: 8px 0 0 15px;
+            padding: 0;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 4px;
+        }
+        
+        .color-example {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        
+        /* SEO content section - hidden at bottom */
+        .seo-content {
+            display: none; /* Hidden from users but visible to search engines */
+            color: #94a3b8;
+            font-size: 11px;
+            line-height: 1.5;
+            margin: 20px 0 10px 0;
+            padding: 15px;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 6px;
+        }
+        
+        .seo-content h2 {
+            font-size: 13px;
+            color: #3b82f6;
+            margin: 0 0 8px 0;
+        }
+        
+        .seo-content p {
+            margin: 0 0 6px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 15px;
+            padding: 10px;
+            border-top: 1px solid #334155;
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2745753897424989" crossorigin="anonymous"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="header">
+        <div class="title">WORDMIND</div>
+        <div class="subtitle">Daily Word Challenge</div>
+    </div>
+    
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-num" id="streak">0</div>
+            <div class="stat-label">Streak</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num" id="played">0</div>
+            <div class="stat-label">Played</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num" id="wins">0%</div>
+            <div class="stat-label">Win %</div>
+        </div>
+    </div>
+    
+    <div class="grid" id="grid"></div>
+    
+    <div class="message" id="message"></div>
+    
+    <div class="keyboard">
+        <div class="key-row">
+            <button class="key" data-key="Q">Q</button>
+            <button class="key" data-key="W">W</button>
+            <button class="key" data-key="E">E</button>
+            <button class="key" data-key="R">R</button>
+            <button class="key" data-key="T">T</button>
+            <button class="key" data-key="Y">Y</button>
+            <button class="key" data-key="U">U</button>
+            <button class="key" data-key="I">I</button>
+            <button class="key" data-key="O">O</button>
+            <button class="key" data-key="P">P</button>
+        </div>
+        <div class="key-row">
+            <button class="key" data-key="A">A</button>
+            <button class="key" data-key="S">S</button>
+            <button class="key" data-key="D">D</button>
+            <button class="key" data-key="F">F</button>
+            <button class="key" data-key="G">G</button>
+            <button class="key" data-key="H">H</button>
+            <button class="key" data-key="J">J</button>
+            <button class="key" data-key="K">K</button>
+            <button class="key" data-key="L">L</button>
+        </div>
+        <div class="key-row">
+            <button class="key wide" data-key="ENTER">ENTER</button>
+            <button class="key" data-key="Z">Z</button>
+            <button class="key" data-key="X">X</button>
+            <button class="key" data-key="C">C</button>
+            <button class="key" data-key="V">V</button>
+            <button class="key" data-key="B">B</button>
+            <button class="key" data-key="N">N</button>
+            <button class="key" data-key="M">M</button>
+            <button class="key wide" data-key="BACKSPACE">⌫</button>
+        </div>
+    </div>
+    
+    <div class="hints">
+        <div class="hint-title">Today's Words</div>
+        <div class="hint-words" id="hints">LOADING...</div>
+    </div>
+    
+    <!-- Leaderboard section -->
+    <div class="leaderboard">
+        <div class="leaderboard-title">🏆 Player Ranking</div>
+        
+        <div class="player-form">
+            <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
+            <button id="saveScore">Save Score</button>
+        </div>
+        
+        <div class="player-list" id="playerList">
+            <!-- Leaderboard will be generated here -->
+            <div class="player-item">
+                <div class="player-info">
+                    <div class="player-rank">1</div>
+                    <div>Alex</div>
+                </div>
+                <div class="player-score">2850</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <button class="action-btn" onclick="newGame()">New Game</button>
+        <button class="action-btn" onclick="shareResult()">Share</button>
+    </div>
+    
+    <div class="share" id="share">
+        <div style="margin-bottom: 10px; font-size: 14px;" id="shareText">Share your score!</div>
+        <button class="action-btn" onclick="shareFB()" style="background: #1877f2; margin-bottom: 8px;">Facebook</button>
+        <button class="action-btn" onclick="shareTwitter()" style="background: #1da1f2; margin-bottom: 8px;">Twitter</button>
+        <button class="action-btn" onclick="copyScore()" style="background: #475569;">Copy Score</button>
+    </div>
+    
+    <!-- Game instructions -->
+    <div class="instructions">
+        <div class="instructions-title">How to Play</div>
+        <div class="instructions-content">
+            Guess the 5-letter hidden word in 6 tries. After each guess, the color of the tiles will change to show how close your guess was to the word.
+        </div>
+        <ul class="instructions-list">
+            <li><span class="color-example" style="background: #10b981;"></span> Green: Letter is correct and in the right spot</li>
+            <li><span class="color-example" style="background: #f59e0b;"></span> Yellow: Letter is in the word but wrong spot</li>
+            <li><span class="color-example" style="background: #475569;"></span> Gray: Letter is not in the word</li>
+        </ul>
+        <div class="instructions-content" style="margin-top: 8px; font-style: italic;">
+            Type letters or use on-screen keyboard. Press ENTER to submit guess.
+        </div>
+    </div>
+    
+    <!-- SEO content section - hidden at bottom -->
+    <div class="seo-content">
+        <h2>WordMind: The Ultimate Daily Word Puzzle Game</h2>
+        <p>WordMind is a captivating online word puzzle game that challenges players to guess a hidden 5-letter word within 6 attempts. This free vocabulary game combines elements of logic, pattern recognition, and linguistic skills, offering a daily mental workout for word enthusiasts.</p>
+        <p>Our word challenge game features a unique scoring system, player rankings, and daily puzzles that refresh every 24 hours. Unlike traditional word games, WordMind focuses on 5-letter vocabulary building, making it accessible yet challenging for players of all skill levels.</p>
+        <p>Play this brain game daily to improve your vocabulary, enhance your problem-solving abilities, and compete with friends on the global leaderboard. The color-coded feedback system (green for correct placement, yellow for correct letter wrong position, gray for incorrect letters) helps players deduce the hidden word through logical deduction.</p>
+        <p>WordMind is completely free to play with no subscriptions or in-app purchases. It's the perfect casual game for word puzzle lovers, students looking to expand their vocabulary, or anyone seeking a quick daily mental challenge. Join thousands of players worldwide in this engaging letter puzzle experience.</p>
+        <p>Keywords: word puzzle, vocabulary game, daily word challenge, 5 letter word game, free online word game, brain training game, word deduction game, letter puzzle, word guessing game, educational game, logic puzzle, pattern recognition game</p>
+    </div>
+    
+    <div class="footer">
+        WordMind - Free Daily Word Puzzle Game
+    </div>
+
+    <script>
+        // Game core logic
+        const words = ['APPLE', 'BRAIN', 'CLOUD', 'DREAM', 'EARTH', 'FLAME', 'GRAPE', 'HEART', 'IGLOO', 'JUICE'];
+        
+        let targetWord = '';
+        let currentRow = 0;
+        let currentCol = 0;
+        let gameActive = true;
+        let currentScore = 0;
+        
+        // Initialize game
+        function initGame() {
+            targetWord = words[Math.floor(Math.random() * words.length)];
+            currentRow = 0;
+            currentCol = 0;
+            gameActive = true;
+            currentScore = 1000; // Base score
+            
+            // Create game grid
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            
+            for (let row = 0; row < 6; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row';
+                
+                for (let col = 0; col < 5; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = 'cell-' + row + '-' + col;
+                    rowDiv.appendChild(cell);
+                }
+                
+                grid.appendChild(rowDiv);
+            }
+            
+            // Update hints
+            updateHints();
+            
+            // Reset keyboard
+            document.querySelectorAll('.key').forEach(key => {
+                key.classList.remove('correct', 'present', 'absent');
+            });
+            
+            // Hide share section
+            document.getElementById('share').classList.remove('show');
+            
+            // Load leaderboard
+            loadLeaderboard();
+            
+            showMessage('Guess the 5-letter word!');
+        }
+        
+        // Update hints
+        function updateHints() {
+            const hintWords = [];
+            const used = new Set();
+            
+            // Find 3 different hint words
+            while (hintWords.length < 3 && hintWords.length < words.length - 1) {
+                const word = words[Math.floor(Math.random() * words.length)];
+                if (word !== targetWord && !used.has(word)) {
+                    hintWords.push(word);
+                    used.add(word);
+                }
+            }
+            
+            document.getElementById('hints').textContent = hintWords.join(' • ');
+        }
+        
+        // Handle key input
+        function handleKey(key) {
+            if (!gameActive) return;
+            
+            if (key === 'ENTER') {
+                submitGuess();
+            } else if (key === 'BACKSPACE') {
+                deleteLetter();
+            } else if (/^[A-Z]$/.test(key)) {
+                addLetter(key);
+            }
+        }
+        
+        function addLetter(letter) {
+            if (currentCol >= 5) return;
+            
+            const cell = document.getElementById('cell-' + currentRow + '-' + currentCol);
+            cell.textContent = letter;
+            cell.classList.add('filled');
+            currentCol++;
+        }
+        
+        function deleteLetter() {
+            if (currentCol <= 0) return;
+            
+            currentCol--;
+            const cell = document.getElementById('cell-' + currentRow + '-' + currentCol);
+            cell.textContent = '';
+            cell.classList.remove('filled');
+        }
+        
+        function submitGuess() {
+            if (currentCol !== 5) {
+                showMessage('Enter 5 letters');
+                return;
+            }
+            
+            // Get guess
+            let guess = '';
+            for (let i = 0; i < 5; i++) {
+                const cell = document.getElementById('cell-' + currentRow + '-' + i);
+                guess += cell.textContent;
+            }
+            
+            // Simple validation
+            if (!words.includes(guess)) {
+                showMessage('Not a valid word');
+                return;
+            }
+            
+            // Calculate score bonus (fewer attempts = higher bonus)
+            currentScore += (6 - currentRow) * 50;
+            
+            // Check letters
+            const result = checkGuess(guess);
+            
+            // Update display
+            for (let i = 0; i < 5; i++) {
+                const cell = document.getElementById('cell-' + currentRow + '-' + i);
+                setTimeout(() => {
+                    cell.classList.add(result[i]);
+                    
+                    // Update keyboard colors
+                    const key = document.querySelector('.key[data-key="' + guess[i] + '"]');
+                    if (key) {
+                        if (result[i] === 'correct') {
+                            key.classList.add('correct');
+                            key.classList.remove('present', 'absent');
+                        } else if (result[i] === 'present' && !key.classList.contains('correct')) {
+                            key.classList.add('present');
+                            key.classList.remove('absent');
+                        } else if (result[i] === 'absent' && !key.classList.contains('correct') && !key.classList.contains('present')) {
+                            key.classList.add('absent');
+                        }
+                    }
+                }, i * 200);
+            }
+            
+            // Check for win
+            if (guess === targetWord) {
+                setTimeout(() => {
+                    gameActive = false;
+                    updateStats(true);
+                    showMessage(`You won! Score: ${currentScore} 🎉`);
+                    document.getElementById('share').classList.add('show');
+                    document.getElementById('shareText').textContent = `Solved in ${currentRow + 1} attempts! Score: ${currentScore}`;
+                }, 1200);
+                return;
+            }
+            
+            currentRow++;
+            currentCol = 0;
+            
+            // Check for loss
+            if (currentRow >= 6) {
+                setTimeout(() => {
+                    gameActive = false;
+                    updateStats(false);
+                    showMessage('Game Over! Word: ' + targetWord);
+                    document.getElementById('share').classList.add('show');
+                    document.getElementById('shareText').textContent = 'The word was: ' + targetWord;
+                }, 1200);
+            }
+        }
+        
+        function checkGuess(guess) {
+            const result = ['absent', 'absent', 'absent', 'absent', 'absent'];
+            const targetLetters = targetWord.split('');
+            const guessLetters = guess.split('');
+            
+            // Check exact matches
+            for (let i = 0; i < 5; i++) {
+                if (guessLetters[i] === targetLetters[i]) {
+                    result[i] = 'correct';
+                    targetLetters[i] = null;
+                    guessLetters[i] = null;
+                }
+            }
+            
+            // Check partial matches
+            for (let i = 0; i < 5; i++) {
+                if (guessLetters[i] !== null) {
+                    const index = targetLetters.indexOf(guessLetters[i]);
+                    if (index !== -1) {
+                        result[i] = 'present';
+                        targetLetters[index] = null;
+                    }
+                }
+            }
+            
+            return result;
+        }
+        
+        // Statistics functions
+        function updateStats(win) {
+            let stats = JSON.parse(localStorage.getItem('wordmind_stats') || '{"played":0,"wins":0,"streak":0}');
+            
+            stats.played++;
+            if (win) {
+                stats.wins++;
+                stats.streak++;
+            } else {
+                stats.streak = 0;
+            }
+            
+            localStorage.setItem('wordmind_stats', JSON.stringify(stats));
+            
+            document.getElementById('streak').textContent = stats.streak;
+            document.getElementById('played').textContent = stats.played;
+            document.getElementById('wins').textContent = stats.played > 0 ? Math.round((stats.wins / stats.played) * 100) + '%' : '0%';
+        }
+        
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('wordmind_stats') || '{"played":0,"wins":0,"streak":0}');
+            document.getElementById('streak').textContent = stats.streak;
+            document.getElementById('played').textContent = stats.played;
+            document.getElementById('wins').textContent = stats.played > 0 ? Math.round((stats.wins / stats.played) * 100) + '%' : '0%';
+        }
+        
+        // Leaderboard functions
+        function savePlayerScore() {
+            const playerName = document.getElementById('playerName').value.trim();
+            if (!playerName) {
+                showMessage('Please enter your name');
+                return;
+            }
+            
+            if (currentScore === 0) {
+                showMessage('Play a game first to get a score!');
+                return;
+            }
+            
+            // Get existing leaderboard
+            let leaderboard = JSON.parse(localStorage.getItem('wordmind_leaderboard') || '[]');
+            
+            // Create player record
+            const playerRecord = {
+                name: playerName,
+                score: currentScore,
+                date: new Date().toLocaleDateString('en-US'),
+                attempts: currentRow + 1
+            };
+            
+            // Add to leaderboard
+            leaderboard.push(playerRecord);
+            
+            // Sort by score (highest first)
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            // Keep only top 10
+            leaderboard = leaderboard.slice(0, 10);
+            
+            // Save to local storage
+            localStorage.setItem('wordmind_leaderboard', JSON.stringify(leaderboard));
+            
+            // Update display
+            updateLeaderboard(leaderboard);
+            
+            showMessage(`Score saved for ${playerName}! 🎯`);
+        }
+        
+        function loadLeaderboard() {
+            const leaderboard = JSON.parse(localStorage.getItem('wordmind_leaderboard') || '[]');
+            updateLeaderboard(leaderboard);
+        }
+        
+        function updateLeaderboard(leaderboard) {
+            const playerList = document.getElementById('playerList');
+            
+            if (leaderboard.length === 0) {
+                playerList.innerHTML = `
+                    <div class="player-item" style="justify-content: center; color: #94a3b8; font-style: italic;">
+                        No scores yet. Be the first!
+                    </div>
+                `;
+                return;
+            }
+            
+            playerList.innerHTML = leaderboard.map((player, index) => `
+                <div class="player-item">
+                    <div class="player-info">
+                        <div class="player-rank">${index + 1}</div>
+                        <div>
+                            <div style="font-weight: bold;">${player.name}</div>
+                            <div style="font-size: 11px; color: #94a3b8;">${player.date} • ${player.attempts} tries</div>
+                        </div>
+                    </div>
+                    <div class="player-score">${player.score}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Message display
+        function showMessage(text) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.classList.add('show');
+            setTimeout(() => {
+                msg.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Share functions
+        function shareResult() {
+            document.getElementById('share').classList.add('show');
+        }
+        
+        function shareFB() {
+            const text = encodeURIComponent('I scored ' + currentScore + ' in WordMind! Try it at ' + window.location.href);
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href) + '&quote=' + text, '_blank');
+        }
+        
+        function shareTwitter() {
+            const text = encodeURIComponent(`Scored ${currentScore} in WordMind! ${window.location.href}`);
+            window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
+        }
+        
+        function copyScore() {
+            const text = 'My WordMind score: ' + document.getElementById('shareText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showMessage('Copied to clipboard!');
+            });
+        }
+        
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleKey('ENTER');
+            else if (e.key === 'Backspace') handleKey('BACKSPACE');
+            else if (/^[a-zA-Z]$/.test(e.key)) handleKey(e.key.toUpperCase());
+        });
+        
+        document.querySelectorAll('.key').forEach(button => {
+            button.addEventListener('click', () => {
+                const key = button.getAttribute('data-key');
+                handleKey(key);
+            });
+        });
+        
+        // Save score button event
+        document.getElementById('saveScore').addEventListener('click', savePlayerScore);
+        
+        // Input field enter key
+        document.getElementById('playerName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                savePlayerScore();
+            }
+        });
+        
+        // New game
+        function newGame() {
+            initGame();
+        }
+        
+        // Page load
+        window.onload = function() {
+            initGame();
+            loadStats();
+            loadLeaderboard();
+        };
+    </script>
+</body>
+</html>

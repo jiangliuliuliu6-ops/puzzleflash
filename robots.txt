@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://puzzleflash.com/sitemap.txt
+Sitemap: https://puzzleflash.com/sitemap.xml

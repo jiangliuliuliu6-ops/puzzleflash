@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Blast 2048 - Play Free Online Merge Puzzle | PuzzleFlash</title>
+    <meta name="description" content="Play Block Blast 2048 on PuzzleFlash! A unique mix of block puzzles and 2048 math challenges. Merge numbers, blast blocks, and climb the leaderboard. No download needed!">
+    <meta name="keywords" content="block blast 2048, merge puzzle, 2048 online, free block games, math puzzle, HTML5 games, PuzzleFlash">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --primary: #facc15; --bg: #0f172a; --card: #1e293b; --text: #e5e7eb; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+        
+        /* 导航栏 */
+        header { background: #020617; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; }
+        .logo { font-weight: 700; color: var(--primary); font-size: 22px; text-decoration: none; }
+        .back-home { color: var(--text); text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.3s; }
+        .back-home:hover { color: var(--primary); }
+
+        /* 游戏容器 */
+        .game-wrapper { width: 100%; max-width: 900px; margin: 20px auto; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+        iframe { width: 100%; height: 600px; border: none; }
+
+        /* 互动区 */
+        .interactions { max-width: 900px; margin: 20px auto; display: flex; justify-content: flex-start; gap: 20px; padding: 0 10px; }
+        .like-btn { background: #1e293b; border: 1px solid #334155; color: #fff; padding: 10px 20px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .like-btn:hover { border-color: var(--primary); background: #2d3748; }
+        .like-btn.active { color: var(--primary); border-color: var(--primary); }
+
+        /* SEO 内容区 */
+        .content-section { max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.8; }
+        h1 { color: #fff; border-left: 5px solid var(--primary); padding-left: 15px; font-size: 28px; }
+        h2 { color: var(--primary); margin-top: 30px; font-size: 22px; }
+        p { color: #94a3b8; margin-bottom: 15px; }
+        .guide-box { background: var(--card); padding: 25px; border-radius: 12px; border: 1px solid #334155; margin: 20px 0; }
+        
+        footer { text-align: center; padding: 40px; color: #64748b; font-size: 13px; border-top: 1px solid #1e293b; }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2745753897424989" crossorigin="anonymous"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo">PuzzleFlash</a>
+    <a href="/" class="back-home">← Back to All Games</a>
+</header>
+
+<div class="game-wrapper">
+    <iframe src="https://s.puzzle-game.io/games/block-blast-2048/block-blast-2048.html" allowfullscreen></iframe>
+</div>
+
+<div class="interactions">
+    <button class="like-btn" id="likeBtn" onclick="handleLike()">
+        <span id="likeIcon">👍</span> <span id="likeCount">128</span> Likes
+    </button>
+</div>
+
+<article class="content-section">
+    <h1>Block Blast 2048: The Ultimate Strategy Puzzle</h1>
+    <p>Are you ready for a brain-teasing adventure? <strong>Block Blast 2048</strong> is not your typical 2048 game. It combines the spatial awareness of block-dropping puzzles with the addictive math mechanics of 2048. Perfect for players who love <strong>logic games</strong> and <strong>strategy challenges</strong>.</p>
+
+    <div class="guide-box">
+        <h2>How to Play Block Blast 2048</h2>
+        <p><strong>1. Aim and Drop:</strong> Drag the numbered blocks to the column where you want to drop them.</p>
+        <p><strong>2. Merge Numbers:</strong> When two blocks with the same value touch, they will automatically merge into a single block with double the value (e.g., 2 + 2 = 4, 1024 + 1024 = 2048).</p>
+        <p><strong>3. Chain Reactions:</strong> Plan your drops to trigger multiple merges in one move. This is the key to achieving high scores and clearing space on the board.</p>
+        <p><strong>4. Don't Reach the Top:</strong> The game ends if the blocks stack up to the red line at the top. Keep merging to survive!</p>
+    </div>
+
+    <h2>SEO Tips for Pro Players</h2>
+    <p>Block Blast 2048 is highly rated among <strong>free online HTML5 games</strong> because it offers endless replayability. Unlike traditional versions, this "Blast" variant adds a layer of urgency and physical movement that keeps your mind sharp. Whether you're playing on a desktop or a mobile browser, the experience is seamless and lag-free.</p>
+</article>
+
+<footer>
+    <p>© 2026 PuzzleFlash. Play Free Browser Games Instantly.</p>
+</footer>
+
+<script>
+    // 点赞逻辑：使用本地存储防止重复点赞
+    let count = parseInt(localStorage.getItem('2048_likes')) || 128;
+    let hasLiked = localStorage.getItem('2048_hasLiked') === 'true';
+    
+    const countEl = document.getElementById('likeCount');
+    const btnEl = document.getElementById('likeBtn');
+    
+    countEl.innerText = count;
+    if(hasLiked) btnEl.classList.add('active');
+
+    function handleLike() {
+        if (!hasLiked) {
+            count++;
+            hasLiked = true;
+            localStorage.setItem('2048_likes', count);
+            localStorage.setItem('2048_hasLiked', 'true');
+            countEl.innerText = count;
+            btnEl.classList.add('active');
+            alert('Thanks for your support!');
+        } else {
+            alert('You already liked this game!');
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -3,44 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PuzzleFlash - Play Classic Games</title>
-    <link rel="stylesheet" href="style.css">
-    <meta name="description" content="Play the best classic and fun puzzle games!">
-    <meta name="keywords" content="puzzle games, fun games, free games, play online, classic games">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <a href="/">PuzzleFlash</a>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h1>Welcome to PuzzleFlash!</h1>
-        <div class="game-container">
-            <a href="game.html">
-                <div class="game-thumbnail">
-                    <img src="thumbnail.jpg" alt="Big Fish Eat Small Fish">
-                    <p>Big Fish Eat Small Fish</p>
-                </div>
-            </a>
-            <!-- You can add more games here in the same way -->
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2026 PuzzleFlash. All rights reserved.</p>
-    </footer>
+    <title>PuzzleFlash - Play Best Free Online Games | Instant Fun No Downloads</title>
+    <meta name="description" content="Play the latest free online games at PuzzleFlash. Explore high-quality HTML5 shooting, puzzle, and idle games. Play instantly on mobile and PC, no installation required.">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQR49JQS45"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-JQR49JQS45');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JQR49JQS45');
     </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2745753897424989"
+     crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #facc15; --bg: #0f172a; --card-bg: #1e293b; --sidebar-bg: #020617; --text: #e5e7eb; --text-dim: #94a3b8; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Poppins', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        a { text-decoration:none; color:inherit; transition: 0.3s; }
+        
+        header { background: var(--sidebar-bg); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; position: sticky; top:0; z-index: 1000; }
+        .logo { font-size: 26px; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+        nav a { margin-left: 20px; font-weight: 600; font-size: 13px; }
+        nav a:hover { color: var(--primary); }
+
+        .hero { background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('/assets/images/hero-bg.jpg') center/cover; padding: 60px 20px; text-align: center; border-bottom: 1px solid #1e293b; }
+        .search-container { max-width: 600px; margin: 20px auto 0; position: relative; }
+        .search-container input { width: 100%; padding: 15px 25px; border-radius: 30px; border: 2px solid #334155; background: rgba(30, 41, 59, 0.9); color: #fff; font-size: 16px; outline: none; }
+        .search-container input:focus { border-color: var(--primary); }
+
+        .wrapper { display: flex; max-width: 1400px; margin: 30px auto; padding: 0 20px; gap: 30px; }
+        aside { width: 250px; flex-shrink: 0; }
+        .sidebar-box { background: var(--sidebar-bg); border-radius: 12px; padding: 20px; margin-bottom: 25px; border: 1px solid #1e293b; }
+        .sidebar-box h3 { font-size: 14px; margin-bottom: 15px; color: var(--primary); text-transform: uppercase; }
+        .cat-list li { padding: 10px 0; border-bottom: 1px solid #1e293b; font-size: 13px; cursor: pointer; display: flex; justify-content: space-between; }
+        .cat-list li:hover { color: var(--primary); transform: translateX(5px); transition: 0.2s; }
+
+        main { flex-grow: 1; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #334155; transition: 0.3s; cursor: pointer; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .thumb { height: 140px; background: #000; overflow: hidden; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .card-body { padding: 15px; }
+        .card-body h3 { font-size: 15px; margin-bottom: 5px; }
+        .card-body p { font-size: 12px; color: var(--text-dim); }
+
+        .seo-footer { background: var(--sidebar-bg); padding: 40px; border-radius: 15px; border: 1px solid #1e293b; margin-top: 50px; }
+        .seo-footer h2 { color: var(--primary); margin-bottom: 15px; }
+        .seo-footer p { font-size: 14px; color: var(--text-dim); margin-bottom: 15px; }
+
+        footer { text-align: center; padding: 50px; border-top: 1px solid #1e293b; color: var(--text-dim); font-size: 13px; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { margin: 0 10px; text-decoration: underline; }
+
+        #no-results { grid-column: 1 / -1; text-align: center; padding: 50px; display: none; }
+
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } aside { display: none; } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo">PuzzleFlash</a>
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/about.html">ABOUT US</a>
+        <a href="/privacy.html">PRIVACY POLICY</a>
+        <a href="/contact.html">CONTACT</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>The World's Best Free Online Games</h1>
+    <p>Premium HTML5 Gaming Experience - Play Anywhere, Anytime.</p>
+    <div class="search-container">
+        <input type="text" id="gameSearch" placeholder="Find your favorite game...">
+    </div>
+</section>
+
+<div class="wrapper">
+    <aside>
+        <div class="sidebar-box">
+            <h3>Game Categories</h3>
+            <ul class="cat-list">
+                <li onclick="filterByCategory('all')">🔥 New Arrivals</li>
+                <li onclick="filterByCategory('action')">🔫 Action Games</li>
+                <li onclick="filterByCategory('puzzle')">🧠 Puzzle & Logic</li>
+                <li onclick="filterByCategory('idle')">💤 Idle Tycoon</li>
+                <li onclick="filterByCategory('arcade')">🕹️ Classic Arcade</li>
+                <li onclick="filterByCategory('strategy')">♟️ Strategy</li>
+            </ul>
+        </div>
+    </aside>
+
+    <main>
+        <div class="grid" id="gameGrid">
+            <div class="card" data-title="geometry dash lite platformer rhythm action arcade" data-category="arcade" onclick="window.location.href='/games/geometry-dash-lite.html'">
+                <div class="thumb">
+                    <img src="/assets/images/geometry-dash-lite.png" alt="Play Geometry Dash Lite on PuzzleFlash"> 
+                </div>
+                <div class="card-body">
+                    <h3>Geometry Dash Lite</h3>
+                    <p>Rhythm-based jump and fly action!</p>
+                </div>
+            </div>
+
+            <div class="card" data-title="try shoot me action shooting reflex aim" data-category="action" onclick="window.location.href='/games/try-shoot-me.html'">
+                <div class="thumb"><img src="/assets/images/try-shoot-me.jpg" alt="Try Shoot Me"></div>
+                <div class="card-body"><h3>Try Shoot Me</h3><p>Ultimate reflex & aim trainer.</p></div>
+            </div>
+            <div class="card" data-title="zombie merge evolution idle defense" data-category="idle" onclick="window.location.href='/games/zombie-merge.html'">
+                <div class="thumb"><img src="/assets/images/zombie-merge.jpg" alt="Zombie Merge"></div>
+                <div class="card-body"><h3>Zombie Merge</h3><p>Merge zombies and evolve army.</p></div>
+            </div>
+            <div class="card" data-title="word search puzzle vocabulary brain" data-category="puzzle" onclick="window.location.href='/games/word-search.html'">
+                <div class="thumb"><img src="/assets/images/word-search.jpg" alt="Word Search"></div>
+                <div class="card-body"><h3>Word Search</h3><p>Sharpen your brain with words.</p></div>
+            </div>
+            <div class="card" data-title="block blast 2048 merge puzzle number" data-category="puzzle" onclick="window.location.href='/games/2048.html'">
+                <div class="thumb"><img src="/assets/images/2048.jpg" alt="2048"></div>
+                <div class="card-body"><h3>Block Blast 2048</h3><p>Smart math merge challenge.</p></div>
+            </div>
+            <div class="card" data-title="block puzzle logic tetris strategy" data-category="strategy" onclick="window.location.href='/games/block-puzzle.html'">
+                <div class="thumb"><img src="/assets/images/block-puzzle.jpg" alt="Block Puzzle"></div>
+                <div class="card-body"><h3>Block Puzzle</h3><p>Strategic grid-filling fun.</p></div>
+            </div>
+            <div class="card" data-title="snake retro arcade classic" data-category="arcade" onclick="window.location.href='/games/snake.html'">
+                <div class="thumb"><img src="/assets/images/snake.jpg" alt="Snake Retro"></div>
+                <div class="card-body"><h3>Snake Retro</h3><p>Relive the Nokia classic.</p></div>
+            </div>
+            <div class="card" data-title="space shooter galaxy attack action" data-category="action" onclick="window.location.href='/games/space-shooter.html'">
+                <div class="thumb"><img src="/assets/images/space-shooter.jpg" alt="Space Shooter"></div>
+                <div class="card-body"><h3>Space Shooter</h3><p>Classic galaxy defense game.</p></div>
+            </div>
+            <div class="card" data-title="farm idle evolution tycoon clicker" data-category="idle" onclick="window.location.href='/games/farm-idle.html'">
+                <div class="thumb"><img src="/assets/images/farm-idle.jpg" alt="Farm Idle"></div>
+                <div class="card-body"><h3>Farm Idle</h3><p>Manage your harvest empire.</p></div>
+            </div>
+            <div id="no-results">No games match your search.</div>
+        </div>
+
+        <article class="seo-footer">
+            <h2>Premium Free Online Browser Games</h2>
+            <p>Welcome to <strong>PuzzleFlash</strong>, your trusted source for high-quality <strong>HTML5 games</strong>. We specialize in providing a safe and fast gaming environment where players can enjoy <strong>puzzle games</strong>, <strong>reflex trainers</strong>, and <strong>idle clickers</strong> without any intrusive downloads or hidden costs.</p>
+            <p>Our mission is to bring casual gaming to everyone. Our games are <strong>fully responsive</strong> and compatible with Android, iOS, and all desktop browsers. From the addictive mechanics of <em>2048</em> to the strategic depths of <em>Zombie Merge</em>, we curate only the best titles for our global community.</p>
+        </article>
+    </main>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="/about.html">About Us</a> | <a href="/privacy.html">Privacy Policy</a> | <a href="/contact.html">Contact Us</a>
+    </div>
+    <p>© 2026 PuzzleFlash - Built for Gamers.</p>
+</footer>
+
+<script>
+    const searchInput = document.getElementById('gameSearch');
+    const cards = document.querySelectorAll('.card');
+    const noResults = document.getElementById('no-results');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        let count = 0;
+        cards.forEach(card => {
+            if(card.getAttribute('data-title').includes(query)) {
+                card.style.display = 'block';
+                count++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        noResults.style.display = count === 0 ? 'block' : 'none';
+    });
+
+    function filterByCategory(cat) {
+        let count = 0;
+        cards.forEach(card => {
+            if(cat === 'all' || card.getAttribute('data-category') === cat) {
+                card.style.display = 'block';
+                count++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        noResults.style.display = count === 0 ? 'block' : 'none';
+    }
+</script>
 </body>
 </html>
