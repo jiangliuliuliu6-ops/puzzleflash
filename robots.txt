@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://puzzleflash.com/sitemap.xml
+Host: https://puzzleflash.com
